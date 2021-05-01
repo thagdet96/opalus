@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:opalus/src/views/ui/home.dart';
+import 'package:opalus/src/views/ui/loading.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.green[400],
         accentColor: Colors.purple,
       ),
-      home: MyHomePage(title: 'Money management'),
+      home: LoadingScreen(),
     );
   }
 }
