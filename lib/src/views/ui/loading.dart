@@ -12,17 +12,19 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new SplashScreen(
-      navigateAfterFuture: loadFromFuture(),
-      loadingText: new Text(
-        'Opalus',
-        style: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24.0),
+    return SafeArea(
+      child: SplashScreen(
+        navigateAfterFuture: loadFromFuture(),
+        loadingText: Text(
+          'Opalus',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24.0),
+        ),
+        image: Image.asset('assets/gif/loading.gif'),
+        backgroundColor: Colors.green,
+        photoSize: 100.0,
+        useLoader: false,
       ),
-      image: Image.asset('assets/gif/loading.gif'),
-      backgroundColor: Colors.green,
-      photoSize: 100.0,
-      useLoader: false,
     );
   }
 }
