@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'BottomIcon.dart';
 
 class BottomBar extends StatefulWidget {
-  BottomBar({Key key}) : super(key: key);
+  BottomBar({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => BottomBarState();
