@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'BottomIcon.dart';
+import 'bottomIcon.dart';
 
 class BottomBar extends StatefulWidget {
   BottomBar({Key? key}) : super(key: key);
