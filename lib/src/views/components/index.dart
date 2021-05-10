@@ -1,1 +1,1 @@
-export 'BottomBar/BottomBar.dart';
+export 'bottomBar/bottomBar.dart';
