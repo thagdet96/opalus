@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
-import 'package:opalus/src/models/tag.dart';
+import 'package:opalus/src/models/core/tag.dart';
 
 class Group {
   final String id;

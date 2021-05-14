@@ -9,6 +9,7 @@ List<Transaction> mockTransactions = [
     amount: 10000000,
     title: 'lương tháng 5',
     time: DateTime(2021, 5, 5),
+    groups: [mockGroups[1]],
     tags: [mockTags[0]],
   ),
   Transaction(
@@ -18,7 +19,7 @@ List<Transaction> mockTransactions = [
     title: 'sushi',
     time: DateTime(2021, 5, 5),
     groups: [mockGroups[0]],
-    tags: [mockTags[2]],
+    tags: [mockTags[2], mockTags[3]],
   ),
   Transaction(
     id: '3',

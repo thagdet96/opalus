@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:collection/collection.dart';
-import 'package:opalus/src/models/group.dart';
-import 'package:opalus/src/models/tag.dart';
+import 'package:flutter/foundation.dart';
+import 'package:opalus/src/models/core/group.dart';
+import 'package:opalus/src/models/core/tag.dart';
 
 class Transaction {
   final String id;
@@ -9,16 +9,17 @@ class Transaction {
   final int amount;
   final DateTime time;
   final String? title;
-  final List<Group>? groups;
+  final List<Group> groups;
   final List<Tag>? tags;
   final dynamic? metadata;
+
   Transaction({
     required this.id,
     required this.type,
     required this.amount,
     required this.time,
     this.title,
-    this.groups,
+    required this.groups,
     this.tags,
     this.metadata,
   });
@@ -52,7 +53,7 @@ class Transaction {
       'amount': amount,
       'time': time.millisecondsSinceEpoch,
       'title': title,
-      'groups': groups?.map((x) => x.toMap()).toList(),
+      'groups': groups.map((x) => x.toMap()).toList(),
       'tags': tags?.map((x) => x.toMap()).toList(),
       'metadata': metadata,
     };
@@ -84,7 +85,6 @@ class Transaction {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
 
     return other is Transaction &&
         other.id == id &&
