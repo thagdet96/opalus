@@ -30,3 +30,11 @@ Widget convertToCurrency(int amount, {TextStyle? style, TextAlign? textAlign}) {
     style: style,
   );
 }
+
+String getRange({required DateTime startDate, required DateTime endDate}) {
+  const String pattern = 'dd/MM';
+
+  return DateFormat(pattern).format(startDate) +
+      ' ~ ' +
+      DateFormat(pattern).format(endDate);
+}

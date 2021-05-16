@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarBloc.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarState.dart';
 import 'package:opalus/src/mocks/emptyPage.dart';
-import 'package:opalus/src/views/ui/transactionScreen.dart';
+import 'package:opalus/src/views/ui/transaction/transactionScreen.dart';
 import '../components/index.dart';
 
 List<Widget> screens = [
