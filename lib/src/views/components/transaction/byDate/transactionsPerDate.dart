@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:opalus/src/models/index.dart';
 import 'package:opalus/src/utils/formats.dart';
-import './transactionRow.dart';
+import 'transactionRow.dart';
 
-class TransactionsInDate extends StatelessWidget {
+class TransactionsPerDate extends StatelessWidget {
   final TransactionsGroupByDate transactionsGroup;
 
-  TransactionsInDate(this.transactionsGroup);
+  TransactionsPerDate(this.transactionsGroup);
 
   @override
   Widget build(BuildContext context) {

@@ -1,49 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:opalus/src/views/components/transaction/byDate/listTransactionByDate.dart';
+import 'package:opalus/src/blocs/bottomBar/bottomBarBloc.dart';
+import 'package:opalus/src/blocs/bottomBar/bottomBarState.dart';
+import 'package:opalus/src/mocks/emptyPage.dart';
+import 'package:opalus/src/views/ui/transactionScreen.dart';
 import '../components/index.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+List<Widget> screens = [
+  TranasctionScreen(),
+  EmptyPage('1'),
+  EmptyPage('2'),
+  EmptyPage('3')
+];
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+class MyHomePage extends StatelessWidget {
+  final title;
+  final _bloc = BottomBarBloc();
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  MyHomePage({this.title});
 
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
           title: Text(
-            widget.title,
+            title,
             style: TextStyle(color: Colors.white),
             textAlign: TextAlign.center,
           ),
         ),
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: ListTransactionByDate(),
+        body: StreamBuilder(
+          stream: _bloc.index,
+          builder: (context, AsyncSnapshot<BottomBarState> snapshot) {
+            BottomBarState state = snapshot.data ?? BottomBarState(0);
+            int activatedIndex = state.index;
+
+            return screens[activatedIndex];
+          },
         ), // This trailing comma makes auto-formatting nicer for build methods.
         bottomNavigationBar: BottomBar(),
       ),
