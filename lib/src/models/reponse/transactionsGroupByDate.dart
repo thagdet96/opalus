@@ -1,22 +1,30 @@
 import 'dart:convert';
-import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:opalus/src/models/index.dart';
 
 class TransactionsGroupByDate {
   final DateTime date;
+  final int income;
+  final int outcome;
   final List<Transaction> transactions;
 
   TransactionsGroupByDate({
     required this.date,
+    required this.income,
+    required this.outcome,
     required this.transactions,
   });
 
   TransactionsGroupByDate copyWith({
     DateTime? date,
+    int? income,
+    int? outcome,
     List<Transaction>? transactions,
   }) {
     return TransactionsGroupByDate(
       date: date ?? this.date,
+      income: income ?? this.income,
+      outcome: outcome ?? this.outcome,
       transactions: transactions ?? this.transactions,
     );
   }
@@ -24,6 +32,8 @@ class TransactionsGroupByDate {
   Map<String, dynamic> toMap() {
     return {
       'date': date.millisecondsSinceEpoch,
+      'income': income,
+      'outcome': outcome,
       'transactions': transactions.map((x) => x.toMap()).toList(),
     };
   }
@@ -31,6 +41,8 @@ class TransactionsGroupByDate {
   factory TransactionsGroupByDate.fromMap(Map<String, dynamic> map) {
     return TransactionsGroupByDate(
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+      income: map['income'],
+      outcome: map['outcome'],
       transactions: List<Transaction>.from(
           map['transactions']?.map((x) => Transaction.fromMap(x))),
     );
@@ -42,19 +54,26 @@ class TransactionsGroupByDate {
       TransactionsGroupByDate.fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'TransactionsGroupByDate(date: $date, transactions: $transactions)';
+  String toString() {
+    return 'TransactionsGroupByDate(date: $date, income: $income, outcome: $outcome, transactions: $transactions)';
+  }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    final listEquals = const DeepCollectionEquality().equals;
 
     return other is TransactionsGroupByDate &&
         other.date == date &&
+        other.income == income &&
+        other.outcome == outcome &&
         listEquals(other.transactions, transactions);
   }
 
   @override
-  int get hashCode => date.hashCode ^ transactions.hashCode;
+  int get hashCode {
+    return date.hashCode ^
+        income.hashCode ^
+        outcome.hashCode ^
+        transactions.hashCode;
+  }
 }
