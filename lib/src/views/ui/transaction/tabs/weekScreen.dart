@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/models/reponse/transactionsGroupByWeek.dart';
+import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/formats.dart';
+import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/components/transaction/byWeek/summarizedTopItem.dart';
 import 'package:opalus/src/views/components/transaction/byWeek/weekRow.dart';
 
@@ -45,7 +47,7 @@ class WeekScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: Size.fromHeight(64),
         child: Card(
           child: Row(
             children: [
@@ -53,19 +55,22 @@ class WeekScreen extends StatelessWidget {
                 title: 'Income',
                 amount: convertToCurrency(
                   totalIncome,
-                  style: TextStyle(color: Colors.green),
+                  style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.INCOME),
                 ),
               ),
               SummariedTopItem(
                 title: 'Outcome',
                 amount: convertToCurrency(
                   totalOutcome,
-                  style: TextStyle(color: Colors.red),
+                  style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.OUTCOME),
                 ),
               ),
               SummariedTopItem(
                 title: 'Total',
-                amount: convertToCurrency(totalIncome - totalOutcome),
+                amount: convertToCurrency(
+                  totalIncome - totalOutcome,
+                  style: MyTheme.bigCurrency(context),
+                ),
               ),
             ],
           ),

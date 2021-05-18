@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/dateScreen.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/weekScreen.dart';
 
@@ -18,12 +19,12 @@ class TranasctionScreenState extends State<TranasctionScreen>
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight),
           child: Container(
-            height: 36,
-            color: Colors.green,
+            height: 42,
+            color: MyTheme.primaryColor(),
             child: new TabBar(
-              indicatorColor: Colors.white,
-              unselectedLabelColor: Colors.blueGrey[100],
-              labelColor: Colors.white,
+              indicatorColor: MyTheme.secondaryColor(),
+              unselectedLabelColor: MyTheme.secondaryColorDark(),
+              labelColor: MyTheme.secondaryColor(),
               tabs: [
                 Tab(
                   text: "Calendar",
