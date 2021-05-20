@@ -6,13 +6,13 @@ class BottomBarIcon extends StatelessWidget {
   final double size = 28;
   final bool active;
 
-  BottomBarIcon(this.assetName, {this.active = false}) : assert(active != null);
+  BottomBarIcon(this.assetName, {this.active = false});
 
   @override
   Widget build(BuildContext context) {
     return SvgPicture.asset(
       this.assetName,
-      color: this.active ? Colors.black : Colors.blueGrey[100],
+      color: this.active ? Colors.white : Colors.blueGrey[100],
       height: this.size,
       width: this.size,
     );

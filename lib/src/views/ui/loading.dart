@@ -6,7 +6,7 @@ class LoadingScreen extends StatelessWidget {
   Future<Widget> loadFromFuture() async {
     // <fetch data from server>
 
-    await Future.delayed(const Duration(seconds: 10));
+    await Future.delayed(const Duration(seconds: 3));
     return Future.value(MyHomePage(title: 'Money management'));
   }
 

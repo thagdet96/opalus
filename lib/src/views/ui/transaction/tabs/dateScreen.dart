@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/mocks/transaction.dart';
 import 'package:opalus/src/models/index.dart';
-import 'package:opalus/src/views/components/transaction/byDate/transactionsInDate.dart';
+import 'package:opalus/src/views/components/transaction/byDate/transactionsPerDate.dart';
 
-class ListTransactionByDate extends StatelessWidget {
+class DateScreen extends StatelessWidget {
   final listTransactions = [
     TransactionsGroupByDate(
       date: DateTime(2021, 5, 5),
@@ -24,7 +24,7 @@ class ListTransactionByDate extends StatelessWidget {
     return ListView.builder(
         itemCount: listTransactions.length,
         itemBuilder: (context, index) {
-          return TransactionsInDate(listTransactions[index]);
+          return TransactionsPerDate(listTransactions[index]);
         });
   }
 }

@@ -14,7 +14,8 @@ class IncreasedApp extends StatelessWidget {
           stream: _bloc.counter,
           initialData: TransactionState(0),
           builder: (BuildContext context, AsyncSnapshot<Object> snapshot) {
-            TransactionState transactionState = snapshot.data as TransactionState;
+            TransactionState transactionState =
+                snapshot.data as TransactionState;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
