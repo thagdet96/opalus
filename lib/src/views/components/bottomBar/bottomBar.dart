@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarBloc.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarEvent.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarState.dart';
+import 'package:opalus/src/utils/myTheme.dart';
 import 'bottomIcon.dart';
 
 class BottomBar extends StatelessWidget {
@@ -22,9 +23,10 @@ class BottomBar extends StatelessWidget {
         return BottomNavigationBar(
           currentIndex: activatedIndex,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.green,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.blueGrey[100],
+          backgroundColor: MyTheme.primaryColor(),
+          selectedItemColor: MyTheme.secondaryColor(),
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+          unselectedItemColor: MyTheme.secondaryColorDark(),
           items: [
             BottomNavigationBarItem(
                 icon: BottomBarIcon(

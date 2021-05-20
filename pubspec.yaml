@@ -57,6 +57,17 @@ flutter:
     - assets/icons/
     - assets/gif/
 
+  fonts:
+    - family: Oswald
+      fonts:
+        - asset: assets/fonts/oswald/Oswald-Regular.ttf
+
+    - family: Barlow
+      fonts:
+        - asset: assets/fonts/barlow/BarlowSemiCondensed-Regular.ttf
+        - asset: assets/fonts/barlow/BarlowSemiCondensed-Italic.ttf
+          style: italic
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

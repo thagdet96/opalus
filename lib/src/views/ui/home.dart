@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarBloc.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarState.dart';
 import 'package:opalus/src/mocks/emptyPage.dart';
+import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/ui/transaction/transactionScreen.dart';
 import '../components/index.dart';
 
@@ -25,9 +26,10 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             title,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: MyTheme.secondaryColor()),
             textAlign: TextAlign.center,
           ),
+          backgroundColor: MyTheme.primaryColor(),
         ),
         body: StreamBuilder(
           stream: _bloc.index,

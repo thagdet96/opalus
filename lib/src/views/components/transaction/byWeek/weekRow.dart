@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:opalus/src/models/reponse/transactionsGroupByWeek.dart';
+import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/formats.dart';
+import 'package:opalus/src/utils/myTheme.dart';
 
 class WeekRow extends StatelessWidget {
   final TransactionsGroupByWeek week;
@@ -16,7 +18,7 @@ class WeekRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         padding: EdgeInsets.all(6),
         shape: BadgeShape.square,
-        badgeColor: Colors.blue,
+        badgeColor: MyTheme.accentColor(),
         badgeContent: Text(
           getRange(startDate: week.startDate, endDate: week.endDate),
           style: TextStyle(color: Colors.white, fontSize: 12),
@@ -24,11 +26,11 @@ class WeekRow extends StatelessWidget {
       ),
       title: convertToCurrency(
         week.income,
-        style: TextStyle(color: Colors.green, fontSize: 14),
+        style: MyTheme.regularCurrency(context, TRANSACTION_TYPE.INCOME),
       ),
       trailing: convertToCurrency(
         week.outcome,
-        style: TextStyle(color: Colors.red, fontSize: 14),
+        style: MyTheme.regularCurrency(context, TRANSACTION_TYPE.OUTCOME),
       ),
     );
   }

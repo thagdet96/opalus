@@ -2,8 +2,10 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:opalus/src/models/index.dart';
+import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/formats.dart';
 import 'transactionRow.dart';
+import 'package:opalus/src/utils/myTheme.dart';
 
 class TransactionsPerDate extends StatelessWidget {
   final TransactionsGroupByDate transactionsGroup;
@@ -23,25 +25,26 @@ class TransactionsPerDate extends StatelessWidget {
             leading: Container(
               alignment: Alignment.centerLeft,
               width: 60,
+              margin: EdgeInsets.only(right: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Badge(
                     borderRadius: BorderRadius.circular(8),
                     shape: BadgeShape.square,
-                    badgeColor: Colors.blue,
+                    badgeColor: MyTheme.accentColor(),
                     badgeContent: Text(
                       DateFormat('EE').format(date),
-                      style: TextStyle(color: Colors.white, fontSize: 10),
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         DateFormat('dd').format(date),
                         style: TextStyle(
-                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
@@ -54,11 +57,11 @@ class TransactionsPerDate extends StatelessWidget {
             ),
             title: convertToCurrency(
               transactionsGroup.income,
-              style: TextStyle(color: Colors.green, fontSize: 14),
+              style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.INCOME),
             ),
             trailing: convertToCurrency(
               transactionsGroup.outcome,
-              style: TextStyle(color: Colors.red, fontSize: 14),
+              style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.OUTCOME),
             ),
           ),
           Divider(color: Colors.grey, height: 0),
