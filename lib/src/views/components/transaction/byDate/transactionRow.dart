@@ -29,7 +29,7 @@ class TransactionRow extends StatelessWidget {
       trailing: convertToCurrency(
         transaction.amount,
         style: TextStyle(
-          color: this.transaction.type == TRANSACTION_TYPE['INCOME']
+          color: this.transaction.type == TRANSACTION_TYPE.INCOME
               ? Colors.green
               : Colors.red,
         ),
