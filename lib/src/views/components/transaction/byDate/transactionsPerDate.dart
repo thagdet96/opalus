@@ -14,7 +14,7 @@ class TransactionsPerDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Transaction> transactions = transactionsGroup.transactions;
+    List<Transaction> transactions = transactionsGroup.transactions ?? [];
     DateTime date = transactionsGroup.date;
 
     return Card(

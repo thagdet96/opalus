@@ -6,13 +6,13 @@ class TransactionsGroupByDate {
   final DateTime date;
   final int income;
   final int outcome;
-  final List<Transaction> transactions;
+  final List<Transaction>? transactions;
 
   TransactionsGroupByDate({
     required this.date,
     required this.income,
     required this.outcome,
-    required this.transactions,
+    this.transactions,
   });
 
   TransactionsGroupByDate copyWith({
@@ -25,7 +25,7 @@ class TransactionsGroupByDate {
       date: date ?? this.date,
       income: income ?? this.income,
       outcome: outcome ?? this.outcome,
-      transactions: transactions ?? this.transactions,
+      transactions: transactions ?? this.transactions ?? [],
     );
   }
 
@@ -34,7 +34,7 @@ class TransactionsGroupByDate {
       'date': date.millisecondsSinceEpoch,
       'income': income,
       'outcome': outcome,
-      'transactions': transactions.map((x) => x.toMap()).toList(),
+      'transactions': transactions?.map((x) => x.toMap()).toList(),
     };
   }
 

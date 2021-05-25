@@ -47,7 +47,7 @@ class MyTheme {
     return Theme.of(context)
         .textTheme
         .bodyText1!
-        .copyWith(color: MyTheme.getCurrencyColor(type), fontSize: 10);
+        .copyWith(color: MyTheme.getCurrencyColor(type), fontSize: 11);
   }
 
   static Color primaryColor() {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/utils/myTheme.dart';
+import 'package:opalus/src/views/ui/transaction/tabs/calendar.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/dateScreen.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/weekScreen.dart';
 
@@ -44,7 +45,7 @@ class TranasctionScreenState extends State<TranasctionScreen>
         ),
         body: TabBarView(
           children: [
-            Text("TAB ONE CONTENT"),
+            Calendar(),
             DateScreen(),
             WeekScreen(),
             Text("TAB THREE CONTENT"),

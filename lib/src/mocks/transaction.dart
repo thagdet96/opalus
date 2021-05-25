@@ -29,4 +29,13 @@ List<Transaction> mockTransactions = [
     groups: [mockGroups[1]],
     tags: [mockTags[1]],
   ),
+    Transaction(
+    id: '4',
+    type: 'income',
+    amount: 11000000,
+    title: 'thưởng tháng 5',
+    time: DateTime(2021, 5, 5),
+    groups: [mockGroups[1]],
+    tags: [mockTags[0]],
+  ),
 ];

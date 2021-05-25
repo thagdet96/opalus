@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Widget getName(dynamic obj, {TextStyle? style}) {
+Text getName(dynamic obj, {TextStyle? style}) {
   try {
     String name = '';
     dynamic formattedObj = obj.toMap();
@@ -20,13 +20,23 @@ Widget getName(dynamic obj, {TextStyle? style}) {
   }
 }
 
-Widget convertToCurrency(int amount, {TextStyle? style, TextAlign? textAlign}) {
+Text convertToCurrency(int amount, {TextStyle? style, TextAlign? textAlign}) {
   return Text(
     NumberFormat.currency(
       locale: 'vi',
       decimalDigits: 0,
     ).format(amount),
     textAlign: textAlign,
+    overflow: TextOverflow.ellipsis,
+    style: style,
+  );
+}
+
+Text convertToCurrencyV2(int amount, {TextStyle? style, TextAlign? textAlign}) {
+  return Text(
+    NumberFormat("###,###").format(amount),
+    textAlign: textAlign,
+    overflow: TextOverflow.ellipsis,
     style: style,
   );
 }
