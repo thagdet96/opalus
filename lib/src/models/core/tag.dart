@@ -57,4 +57,16 @@ class Tag {
 
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ loop.hashCode;
+
+  static String dbName = 'tags';
+
+  static String get createTable {
+    return '''
+      CREATE TABLE $dbName (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        loop TEXT
+      )
+    ''';
+  }
 }

@@ -1,12 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:opalus/src/models/reponse/transactionsGroupByWeek.dart';
+import 'package:opalus/src/models/reponse/groupTransactions.dart';
 import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/formats.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 
 class WeekRow extends StatelessWidget {
-  final TransactionsGroupByWeek week;
+  final GroupTransaction week;
 
   WeekRow(this.week);
 
@@ -20,7 +20,10 @@ class WeekRow extends StatelessWidget {
         shape: BadgeShape.square,
         badgeColor: MyTheme.accentColor(),
         badgeContent: Text(
-          getRange(startDate: week.startDate, endDate: week.endDate),
+          getRange(
+            startDate: week.time,
+            endDate: week.time.add(Duration(days: 6)),
+          ),
           style: TextStyle(color: Colors.white, fontSize: 12),
         ),
       ),

@@ -29,7 +29,7 @@ List<Transaction> mockTransactions = [
     groups: [mockGroups[1]],
     tags: [mockTags[1]],
   ),
-    Transaction(
+  Transaction(
     id: '4',
     type: 'income',
     amount: 11000000,
@@ -37,5 +37,28 @@ List<Transaction> mockTransactions = [
     time: DateTime(2021, 5, 5),
     groups: [mockGroups[1]],
     tags: [mockTags[0]],
+  ),
+  Transaction(
+    id: '5',
+    type: 'outcome',
+    amount: 200000,
+    time: DateTime(2021, 5, 15),
+    groups: [mockGroups[0]],
+    tags: [mockTags[3]],
+  ),
+  Transaction(
+    id: '6',
+    type: 'outcome',
+    amount: 150000,
+    time: DateTime(2021, 2, 6),
+    groups: [mockGroups[0]],
+    tags: [mockTags[3]],
+  ),
+  Transaction(
+    id: '7',
+    type: 'income',
+    amount: 10000,
+    time: DateTime(2021, 2, 7),
+    groups: [mockGroups[0]],
   ),
 ];
