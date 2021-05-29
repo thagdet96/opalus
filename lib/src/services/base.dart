@@ -103,6 +103,7 @@ class BaseService<T> {
         (cur, e) => e[key] != null ? cur + e[key].split(',') : cur,
       );
 
+      fieldAllIds.removeWhere((id) => id == '');
       var fieldData = fieldAllIds.isEmpty
           ? []
           : await service.getByListId(fieldAllIds.join(','));

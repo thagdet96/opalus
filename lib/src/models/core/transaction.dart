@@ -75,6 +75,19 @@ class Transaction {
     );
   }
 
+  factory Transaction.fromRawMap(Map<String, dynamic> map) {
+    return Transaction(
+      id: map['id'],
+      type: map['type'],
+      amount: map['amount'],
+      time: map['time'],
+      title: map['title'],
+      groups: map['groups'],
+      tags: map['tags'],
+      metadata: map['metadata'],
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory Transaction.fromJson(String source) =>

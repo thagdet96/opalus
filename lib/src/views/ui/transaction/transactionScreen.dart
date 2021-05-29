@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarBloc.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/index.dart';
+import 'package:opalus/src/views/components/transaction/addTransactionButton/addTransactionButton.dart';
 
 class TransactionScreen extends StatefulWidget {
   @override
@@ -37,8 +38,7 @@ class TransactionScreenState extends State<TransactionScreen>
           child: Container(
             height: 42,
             color: MyTheme.primaryColor(),
-            child: new TabBar(
-              controller: _controller,
+            child: TabBar(
               indicatorColor: MyTheme.secondaryColor(),
               unselectedLabelColor: MyTheme.secondaryColorDark(),
               labelColor: MyTheme.secondaryColor(),
@@ -68,6 +68,7 @@ class TransactionScreenState extends State<TransactionScreen>
             MonthScreen(),
           ],
         ),
+        floatingActionButton: AddTransactionButton(),
       ),
     );
   }
