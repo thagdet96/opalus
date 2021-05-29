@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:opalus/src/models/index.dart';
 import 'package:opalus/src/utils/constants.dart';
+import 'package:opalus/src/models/reponse/groupTransactions.dart';
 import 'package:opalus/src/utils/formats.dart';
 import 'transactionRow.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 
 class TransactionsPerDate extends StatelessWidget {
-  final TransactionsGroupByDate transactionsGroup;
+  final GroupTransaction transactionsGroup;
 
   TransactionsPerDate(this.transactionsGroup);
 
   @override
   Widget build(BuildContext context) {
     List<Transaction> transactions = transactionsGroup.transactions ?? [];
-    DateTime date = transactionsGroup.date;
+    DateTime date = transactionsGroup.time;
 
     return Card(
       child: Column(
@@ -30,6 +31,7 @@ class TransactionsPerDate extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Badge(
+                    toAnimate: false,
                     borderRadius: BorderRadius.circular(8),
                     shape: BadgeShape.square,
                     badgeColor: MyTheme.accentColor(),

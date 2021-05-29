@@ -53,21 +53,24 @@ class Transaction {
       'amount': amount,
       'time': time.millisecondsSinceEpoch,
       'title': title,
-      'groups': groups.map((x) => x.toMap()).toList(),
-      'tags': tags?.map((x) => x.toMap()).toList(),
+      'groups': groups.map((x) => x.id).join(','),
+      'tags': tags?.map((x) => x.id).join(','),
       'metadata': metadata,
     };
   }
 
   factory Transaction.fromMap(Map<String, dynamic> map) {
+    List<Group> groups = map['groups'] is List ? List.from(map['groups']) : [];
+    List<Tag> tags = map['tags'] is List ? List.from(map['tags']) : [];
+
     return Transaction(
       id: map['id'],
       type: map['type'],
       amount: map['amount'],
       time: DateTime.fromMillisecondsSinceEpoch(map['time']),
       title: map['title'],
-      groups: List<Group>.from(map['groups']?.map((x) => Group.fromMap(x))),
-      tags: List<Tag>.from(map['tags']?.map((x) => Tag.fromMap(x))),
+      groups: groups,
+      tags: tags,
       metadata: map['metadata'],
     );
   }
@@ -107,5 +110,22 @@ class Transaction {
         groups.hashCode ^
         tags.hashCode ^
         metadata.hashCode;
+  }
+
+  static String dbName = 'transactions';
+
+  static String get createTable {
+    return '''
+      CREATE TABLE $dbName (
+        id TEXT PRIMARY KEY,
+        type TEXT NOT NULL,
+        amount INTEGER NOT NULL,
+        time INTERGER NOT NULL,
+        title TEXT,
+        groups TEXT NOT NULL,
+        tags TEXT,
+        metadata TEXT
+      );
+    ''';
   }
 }

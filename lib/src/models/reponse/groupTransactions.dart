@@ -2,27 +2,27 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:opalus/src/models/index.dart';
 
-class TransactionsGroupByDate {
-  final DateTime date;
+class GroupTransaction {
+  final DateTime time;
   final int income;
   final int outcome;
   final List<Transaction>? transactions;
 
-  TransactionsGroupByDate({
-    required this.date,
+  GroupTransaction({
+    required this.time,
     required this.income,
     required this.outcome,
     this.transactions,
   });
 
-  TransactionsGroupByDate copyWith({
-    DateTime? date,
+  GroupTransaction copyWith({
+    DateTime? time,
     int? income,
     int? outcome,
     List<Transaction>? transactions,
   }) {
-    return TransactionsGroupByDate(
-      date: date ?? this.date,
+    return GroupTransaction(
+      time: time ?? this.time,
       income: income ?? this.income,
       outcome: outcome ?? this.outcome,
       transactions: transactions ?? this.transactions ?? [],
@@ -31,39 +31,38 @@ class TransactionsGroupByDate {
 
   Map<String, dynamic> toMap() {
     return {
-      'date': date.millisecondsSinceEpoch,
+      'time': time.millisecondsSinceEpoch,
       'income': income,
       'outcome': outcome,
-      'transactions': transactions?.map((x) => x.toMap()).toList(),
+      'transactions': transactions,
     };
   }
 
-  factory TransactionsGroupByDate.fromMap(Map<String, dynamic> map) {
-    return TransactionsGroupByDate(
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+  factory GroupTransaction.fromMap(Map<String, dynamic> map) {
+    return GroupTransaction(
+      time: DateTime.fromMillisecondsSinceEpoch(map['time']),
       income: map['income'],
       outcome: map['outcome'],
-      transactions: List<Transaction>.from(
-          map['transactions']?.map((x) => Transaction.fromMap(x))),
+      transactions: List<Transaction>.from(map['transactions']),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionsGroupByDate.fromJson(String source) =>
-      TransactionsGroupByDate.fromMap(json.decode(source));
+  factory GroupTransaction.fromJson(String source) =>
+      GroupTransaction.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'TransactionsGroupByDate(date: $date, income: $income, outcome: $outcome, transactions: $transactions)';
+    return 'GroupTransaction(time: $time, income: $income, outcome: $outcome, transactions: $transactions)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is TransactionsGroupByDate &&
-        other.date == date &&
+    return other is GroupTransaction &&
+        other.time == time &&
         other.income == income &&
         other.outcome == outcome &&
         listEquals(other.transactions, transactions);
@@ -71,7 +70,7 @@ class TransactionsGroupByDate {
 
   @override
   int get hashCode {
-    return date.hashCode ^
+    return time.hashCode ^
         income.hashCode ^
         outcome.hashCode ^
         transactions.hashCode;

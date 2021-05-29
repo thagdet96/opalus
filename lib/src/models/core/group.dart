@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:opalus/src/models/core/tag.dart';
+import 'package:opalus/src/services/tag.dart';
 
 class Group {
   final String id;
@@ -32,16 +33,18 @@ class Group {
     return {
       'id': id,
       'name': name,
-      'tags': tags?.map((x) => x.toMap()).toList(),
+      'tags': tags?.map((x) => x.id).join(','),
       'budget': budget,
     };
   }
 
   factory Group.fromMap(Map<String, dynamic> map) {
+    List<Tag> tags = map['tags'] is List ? List.from(map['tags']) : [];
+
     return Group(
       id: map['id'],
       name: map['name'],
-      tags: List<Tag>.from(map['tags']?.map((x) => Tag.fromMap(x))),
+      tags: tags,
       budget: map['budget'],
     );
   }
@@ -70,5 +73,18 @@ class Group {
   @override
   int get hashCode {
     return id.hashCode ^ name.hashCode ^ tags.hashCode ^ budget.hashCode;
+  }
+
+  static String dbName = 'groups';
+
+  static String get createTable {
+    return '''
+      CREATE TABLE $dbName (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        tags TEXT,
+        budget INTEGER
+      )
+    ''';
   }
 }

@@ -1,44 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:opalus/src/models/reponse/transactionsGroupByWeek.dart';
+import 'package:opalus/src/models/reponse/groupTransactions.dart';
+import 'package:opalus/src/services/transaction.dart';
 import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/formats.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/components/transaction/byWeek/summarizedTopItem.dart';
 import 'package:opalus/src/views/components/transaction/byWeek/weekRow.dart';
 
-class WeekScreen extends StatelessWidget {
-  final totalByWeeks = [
-    TransactionsGroupByWeek(
-      startDate: DateTime(2021, 5, 5),
-      endDate: DateTime(2021, 5, 11),
-      income: 10000000,
-      outcome: 300000,
-    ),
-    TransactionsGroupByWeek(
-      startDate: DateTime(2021, 5, 12),
-      endDate: DateTime(2021, 5, 18),
-      income: 0,
-      outcome: 50000,
-    ),
-    TransactionsGroupByWeek(
-      startDate: DateTime(2021, 5, 19),
-      endDate: DateTime(2021, 5, 25),
-      income: 300000,
-      outcome: 100000,
-    ),
-    TransactionsGroupByWeek(
-      startDate: DateTime(2021, 5, 26),
-      endDate: DateTime(2021, 6, 2),
-      income: 0,
-      outcome: 80000,
-    ),
-    TransactionsGroupByWeek(
-      startDate: DateTime(2021, 6, 2),
-      endDate: DateTime(2021, 6, 4),
-      income: 0,
-      outcome: 90000,
-    ),
-  ];
+class WeekScreen extends StatefulWidget {
+  @override
+  WeekScreenState createState() => WeekScreenState();
+}
+
+class WeekScreenState extends State<WeekScreen> {
+  List<GroupTransaction> totalByWeeks = [];
+
+  @override
+  initState() {
+    super.initState();
+    getListTransactionGroupByWeek();
+  }
+
+  getListTransactionGroupByWeek() async {
+    var fetched = await TransactionService().getAndGroupByWeek(
+      DateTime.now(),
+    );
+    setState(() {
+      totalByWeeks = fetched;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
