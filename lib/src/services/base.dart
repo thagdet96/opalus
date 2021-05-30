@@ -1,4 +1,5 @@
 import 'package:opalus/src/utils/connection.dart';
+import 'package:opalus/src/utils/errorHandler.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BaseService<T> {
@@ -7,52 +8,72 @@ class BaseService<T> {
   Map<String, BaseService> mappingFields = Map();
 
   Future<int> insert(T model) async {
-    Database db = await instance.database;
+    try {
+      Database db = await instance.database;
 
-    return await db.insert(
-      dbName,
-      toMap(model),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+      return await db.insert(
+        dbName,
+        toMap(model),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (err) {
+      toastError(err);
+      return 0;
+    }
   }
 
   Future<List<T>> getAll() async {
-    Database db = await instance.database;
+    try {
+      Database db = await instance.database;
 
-    List<Map<String, dynamic>> raw = await db.query(dbName);
+      List<Map<String, dynamic>> raw = await db.query(dbName);
 
-    return raw.map(fromMap).toList();
+      return raw.map(fromMap).toList();
+    } catch (err) {
+      toastError(err);
+      return [];
+    }
   }
 
   Future<T> getById(String id) async {
-    Database db = await instance.database;
+    try {
+      Database db = await instance.database;
 
-    List<Map<String, dynamic>> raw = await db.query(
-      dbName,
-      distinct: true,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+      List<Map<String, dynamic>> raw = await db.query(
+        dbName,
+        distinct: true,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
 
-    var mapped = await join(raw);
+      var mapped = await join(raw);
 
-    return fromMap(mapped.first);
+      return fromMap(mapped.first);
+    } catch (err) {
+      toastError(err);
+      return null as T;
+    }
   }
 
   /*
    * Param String ids List of id seperated by ','. For example: 1,2,3 
    */
   Future<List<T>> getByListId(String ids) async {
-    Database db = await instance.database;
+    try {
+      Database db = await instance.database;
 
-    List<Map<String, dynamic>> raw = await db.query(
-      dbName,
-      where: 'id IN ($ids)',
-    );
+      List<Map<String, dynamic>> raw = await db.query(
+        dbName,
+        where: 'id IN ($ids)',
+      );
 
-    var mapped = await join(raw);
+      var mapped = await join(raw);
 
-    return mapped.map(fromMap).toList();
+      return mapped.map(fromMap).toList();
+    } catch (err) {
+      toastError(err);
+      return [];
+    }
   }
 
   T fromMap(Map<String, dynamic> map) {

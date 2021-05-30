@@ -3,6 +3,7 @@ import 'package:opalus/src/models/reponse/groupTransactions.dart';
 import 'package:opalus/src/services/base.dart';
 import 'package:opalus/src/services/group.dart';
 import 'package:opalus/src/services/tag.dart';
+import 'package:opalus/src/utils/errorHandler.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 class TransactionService extends BaseService<Transaction> {
@@ -27,13 +28,18 @@ class TransactionService extends BaseService<Transaction> {
     DateTime upper,
     DateTime lower,
   ) async {
-    sqflite.Database db = await instance.database;
+    try {
+      sqflite.Database db = await instance.database;
 
-    return db.query(
-      dbName,
-      where: 'time BETWEEN ? AND ?',
-      whereArgs: [upper.millisecondsSinceEpoch, lower.millisecondsSinceEpoch],
-    );
+      return db.query(
+        dbName,
+        where: 'time BETWEEN ? AND ?',
+        whereArgs: [upper.millisecondsSinceEpoch, lower.millisecondsSinceEpoch],
+      );
+    } catch (err) {
+      toastError(err);
+      return [];
+    }
   }
 
   Future<List<GroupTransaction>> getAndGroupByDate(
