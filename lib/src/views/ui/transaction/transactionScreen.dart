@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarBloc.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/calendar.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/dateScreen.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/weekScreen.dart';
 
-class TranasctionScreen extends StatefulWidget {
+class TransactionScreen extends StatefulWidget {
   @override
-  TranasctionScreenState createState() => TranasctionScreenState();
+  TransactionScreenState createState() => TransactionScreenState();
 }
 
-class TranasctionScreenState extends State<TranasctionScreen>
+class TransactionScreenState extends State<TransactionScreen>
     with SingleTickerProviderStateMixin {
+  late TabController _controller;
+  final _bloc = TransactionNavBarBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _bloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -23,6 +40,7 @@ class TranasctionScreenState extends State<TranasctionScreen>
             height: 42,
             color: MyTheme.primaryColor(),
             child: new TabBar(
+              controller: _controller,
               indicatorColor: MyTheme.secondaryColor(),
               unselectedLabelColor: MyTheme.secondaryColorDark(),
               labelColor: MyTheme.secondaryColor(),
@@ -44,8 +62,9 @@ class TranasctionScreenState extends State<TranasctionScreen>
           ),
         ),
         body: TabBarView(
+          controller: _controller,
           children: [
-            Calendar(),
+            Calendar(_controller),
             DateScreen(),
             WeekScreen(),
             Text("TAB THREE CONTENT"),

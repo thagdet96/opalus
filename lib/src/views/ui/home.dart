@@ -7,7 +7,7 @@ import 'package:opalus/src/views/ui/transaction/transactionScreen.dart';
 import '../components/index.dart';
 
 List<Widget> screens = [
-  TranasctionScreen(),
+  TransactionScreen(),
   EmptyPage('1'),
   EmptyPage('2'),
   EmptyPage('3')
