@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/utils/myTheme.dart';
-import 'package:opalus/src/views/ui/transaction/tabs/calendar.dart';
-import 'package:opalus/src/views/ui/transaction/tabs/dateScreen.dart';
-import 'package:opalus/src/views/ui/transaction/tabs/weekScreen.dart';
+import 'package:opalus/src/views/ui/transaction/tabs/index.dart';
 
 class TranasctionScreen extends StatefulWidget {
   @override
@@ -48,7 +46,7 @@ class TranasctionScreenState extends State<TranasctionScreen>
             Calendar(),
             DateScreen(),
             WeekScreen(),
-            Text("TAB THREE CONTENT"),
+            MonthScreen(),
           ],
         ),
       ),

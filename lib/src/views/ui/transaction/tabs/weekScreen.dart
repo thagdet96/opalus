@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/models/reponse/groupTransactions.dart';
 import 'package:opalus/src/services/transaction.dart';
-import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/formats.dart';
-import 'package:opalus/src/utils/myTheme.dart';
-import 'package:opalus/src/views/components/transaction/byWeek/summarizedTopItem.dart';
-import 'package:opalus/src/views/components/transaction/byWeek/weekRow.dart';
+import 'package:opalus/src/views/components/transaction/byGroup/index.dart';
 
 class WeekScreen extends StatefulWidget {
   @override
@@ -36,40 +33,19 @@ class WeekScreenState extends State<WeekScreen> {
     int totalOutcome = totalByWeeks.fold(0, (cur, e) => cur + e.outcome);
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(64),
-        child: Card(
-          child: Row(
-            children: [
-              SummariedTopItem(
-                title: 'Income',
-                amount: convertToCurrency(
-                  totalIncome,
-                  style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.INCOME),
-                ),
-              ),
-              SummariedTopItem(
-                title: 'Outcome',
-                amount: convertToCurrency(
-                  totalOutcome,
-                  style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.OUTCOME),
-                ),
-              ),
-              SummariedTopItem(
-                title: 'Total',
-                amount: convertToCurrency(
-                  totalIncome - totalOutcome,
-                  style: MyTheme.bigCurrency(context),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: TopBar(totalIncome: totalIncome, totalOutcome: totalOutcome),
       body: ListView.separated(
         itemCount: totalByWeeks.length,
         itemBuilder: (context, index) {
-          return WeekRow(totalByWeeks[index]);
+          String badgeContent = getRange(
+            startDate: totalByWeeks[index].time,
+            endDate: totalByWeeks[index].time.add(Duration(days: 6)),
+          );
+          return GroupRow(
+            badgeContent: badgeContent,
+            income: totalByWeeks[index].income,
+            outcome: totalByWeeks[index].outcome,
+          );
         },
         separatorBuilder: (context, index) {
           return Divider();
