@@ -38,8 +38,7 @@ class Calendar extends StatelessWidget {
                               ? Container()
                               : convertToCurrencyV2(
                                   entry.value,
-                                  style:
-                                      MyTheme.smallCurrency(context, entry.key),
+                                  style: MyTheme.smallCurrency(context, entry.key),
                                 ),
                         ),
                         eventDate: totalByDay.time,
@@ -52,8 +51,8 @@ class Calendar extends StatelessWidget {
             return CellCalendar(
               events: _events,
               onCellTapped: (DateTime date) {
-                _bloc.eventSink.add(SelectDateEvent(date));
                 _controller.animateTo(1);
+                Future.delayed(const Duration(milliseconds: 300), () => _bloc.eventSink.add(SelectDateEvent(date)));
               },
             );
           } else {

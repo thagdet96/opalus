@@ -48,11 +48,10 @@ class TransactionService extends BaseService<Transaction> {
   ]) async {
     List<Map<String, dynamic>> raw = await getRawBetween(
       DateTime(date.year, date.month, 1),
-      date,
+      DateTime(date.year, date.month + 1, 0),
     );
 
-    var transactions =
-        expand ? (await join(raw)).map(fromMap) : raw.map(fromMap);
+    var transactions = expand ? (await join(raw)).map(fromMap) : raw.map(fromMap);
     List<GroupTransaction> group = transactions.fold([], (cur, trans) {
       int index = cur.indexWhere((group) => group.time.day == trans.time.day);
       var group = index != -1
@@ -78,6 +77,7 @@ class TransactionService extends BaseService<Transaction> {
       return cur;
     });
 
+    group.sort((g1, g2) => g1.time.compareTo(g2.time));
     return group;
   }
 
