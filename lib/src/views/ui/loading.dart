@@ -24,7 +24,7 @@ class LoadingScreen extends StatelessWidget {
       Future.wait(mockGroups.map(groupService.insert));
     } else {
       await Future.delayed(const Duration(seconds: 2));
-      var t = await TagService().getAll();
+      var t = await TransactionService().getAll();
       print(t);
     }
 
