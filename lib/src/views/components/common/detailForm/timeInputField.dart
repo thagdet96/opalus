@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'utils.dart';
 
-const pattern = 'yyyy-MM-dd kk:mm';
+const pattern = 'yyyy-MM-dd';
 
 class TimeInputField extends StatelessWidget {
   final DateTime _selectedTime = DateTime.now();
-  final TextEditingController _timeController = new TextEditingController(
-    text: DateFormat(pattern).format(DateTime.now()),
-  );
   final Map<String, dynamic> model;
   final hideOptionsContainer;
   final FocusNode _focus = new FocusNode();
@@ -27,7 +24,6 @@ class TimeInputField extends StatelessWidget {
       type: DateTimePickerType.date,
       initialDate: _selectedTime,
       dateMask: 'dd / MM / yyyy ( EE )',
-      controller: _timeController,
       firstDate: DateTime(2015),
       lastDate: DateTime(2030),
       dateLabelText: 'Date',
