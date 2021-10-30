@@ -3,7 +3,7 @@ import 'package:opalus/src/models/reponse/groupTransactions.dart';
 import 'package:opalus/src/services/base.dart';
 import 'package:opalus/src/services/group.dart';
 import 'package:opalus/src/services/tag.dart';
-import 'package:opalus/src/utils/errorHandler.dart';
+import 'package:opalus/src/utils/notiHandler.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 class TransactionService extends BaseService<Transaction> {

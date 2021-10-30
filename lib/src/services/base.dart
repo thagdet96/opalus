@@ -1,5 +1,5 @@
 import 'package:opalus/src/utils/connection.dart';
-import 'package:opalus/src/utils/errorHandler.dart';
+import 'package:opalus/src/utils/notiHandler.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BaseService<T> {
