@@ -115,7 +115,8 @@ class BaseService<T> {
               clone[key] != null ? clone[key].split(',') : [];
           var mappedField = fieldIds
               .map(
-                (id) => fieldData.firstWhere((data) => data.id == id),
+                (id) => fieldData.firstWhere((data) => data.id == id,
+                    orElse: () => null),
               )
               .toList();
 

@@ -39,6 +39,7 @@ class TransactionScreenState extends State<TransactionScreen>
             height: 42,
             color: MyTheme.primaryColor(),
             child: TabBar(
+              controller: _controller,
               indicatorColor: MyTheme.secondaryColor(),
               unselectedLabelColor: MyTheme.secondaryColorDark(),
               labelColor: MyTheme.secondaryColor(),
