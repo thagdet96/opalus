@@ -3,7 +3,7 @@ import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarEvent.dart';
 import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarState.dart';
 
 class TransactionNavBarBloc {
-  static final TransactionNavBarBloc _singleton =
+  static late TransactionNavBarBloc _singleton =
       new TransactionNavBarBloc._internal();
   TransactionNavBarState _navBarState = TransactionNavBarState(DateTime.now());
 
@@ -16,6 +16,10 @@ class TransactionNavBarBloc {
   Sink<TransactionNavBarEvent> get eventSink => _eventController.sink;
 
   factory TransactionNavBarBloc() {
+    if (_singleton._eventController.isClosed ||
+        _singleton._stateController.isClosed) {
+      return _singleton = new TransactionNavBarBloc._internal();
+    }
     return _singleton;
   }
 
