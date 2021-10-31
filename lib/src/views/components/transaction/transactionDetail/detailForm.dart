@@ -4,6 +4,7 @@ import 'package:opalus/src/blocs/detailForm/detailFormEvent.dart';
 import 'package:opalus/src/models/core/transaction.dart';
 import 'package:opalus/src/services/transaction.dart';
 import 'package:opalus/src/views/components/common/detailForm/index.dart';
+import 'package:opalus/src/utils/notiHandler.dart';
 import './toggleType.dart';
 import 'package:uuid/uuid.dart';
 
@@ -29,7 +30,6 @@ class DetailFormState extends State<TransactionDetailForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      autovalidateMode: AutovalidateMode.always,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -72,15 +72,18 @@ class DetailFormState extends State<TransactionDetailForm> {
                 var form = _formKey.currentState;
                 if (form != null && form.validate()) {
                   form.save();
-                  form.reset();
-                  groupsController.clear();
-                  tagsController.clear();
 
                   String id = Uuid().v4();
                   model['id'] = id;
                   Transaction transaction = Transaction.fromRawMap(model);
                   await TransactionService().insert(transaction);
+
+                  form.reset();
+                  groupsController.clear();
+                  tagsController.clear();
+                  moneyController.clear();
                   hideOptionsContainer();
+                  toastSuccess('Transaction created');
                 }
               },
               child: Text('Save'),

@@ -27,6 +27,7 @@ class TimeInputField extends StatelessWidget {
       firstDate: DateTime(2015),
       lastDate: DateTime(2030),
       dateLabelText: 'Date',
+      initialValue: DateFormat(pattern).format(_selectedTime),
       validator: (String? value) {
         if (value == null || value.isEmpty) {
           return errorMessage;
