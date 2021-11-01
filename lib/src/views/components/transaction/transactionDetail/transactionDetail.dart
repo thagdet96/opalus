@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'detailForm.dart';
 
-class TrasnsactionDetail extends StatelessWidget {
+class TransactionDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
