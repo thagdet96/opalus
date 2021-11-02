@@ -10,8 +10,9 @@ class GroupInputField extends StatelessWidget {
   final _bloc = DetailFormBloc();
   final TextEditingController _controller;
   final Map<String, dynamic> model;
+  final setOptionsContainerVisible;
 
-  GroupInputField(this.model, this._controller);
+  GroupInputField(this.model, this._controller, this.setOptionsContainerVisible);
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +33,15 @@ class GroupInputField extends StatelessWidget {
             return null;
           },
           onSaved: (String? value) {
-            model['groups'] =
-                getSelectedId<Group>(state.groupsSelected, state.groups);
+            model['groups'] = getSelectedId<Group>(state.groupsSelected, state.groups);
           },
           controller: _controller,
           showCursor: true,
           readOnly: true,
           onTap: () async {
-            List<Group> groups = state.groups == null
-                ? await GroupService().getAll()
-                : state.groups!;
+            List<Group> groups = state.groups == null ? await GroupService().getAll() : state.groups!;
             _bloc.eventSink.add(DetailFormInit<Group>(groups, _controller));
+            setOptionsContainerVisible(true);
           },
         );
       },

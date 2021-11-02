@@ -10,8 +10,9 @@ class TagInputField extends StatelessWidget {
   final _bloc = DetailFormBloc();
   final TextEditingController _controller;
   final Map<String, dynamic> model;
+  final setOptionsContainerVisible;
 
-  TagInputField(this.model, this._controller);
+  TagInputField(this.model, this._controller, this.setOptionsContainerVisible);
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,9 @@ class TagInputField extends StatelessWidget {
           showCursor: true,
           readOnly: true,
           onTap: () async {
-            List<Tag> tags =
-                state.tags == null ? await TagService().getAll() : state.tags!;
+            List<Tag> tags = state.tags == null ? await TagService().getAll() : state.tags!;
             _bloc.eventSink.add(DetailFormInit<Tag>(tags, _controller));
+            setOptionsContainerVisible(true);
           },
         );
       },

@@ -21,9 +21,13 @@ class DetailFormState extends State<TransactionDetailForm> {
   Map<String, dynamic> model = {};
   final TextEditingController groupsController = TextEditingController();
   final TextEditingController tagsController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
+  bool optionsContainerVisible = false;
 
-  void hideOptionsContainer() {
-    _bloc.eventSink.add(null as DetailFormEvent);
+  void setOptionsContainerVisible(bool val) {
+    setState(() {
+      optionsContainerVisible = val;
+    });
   }
 
   @override
@@ -34,7 +38,7 @@ class DetailFormState extends State<TransactionDetailForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           ToggleType(model),
-          TimeInputField(model, hideOptionsContainer),
+          TimeInputField(model, () => setOptionsContainerVisible(false)),
           TextFormField(
             controller: moneyController,
             decoration: InputDecoration(
@@ -50,12 +54,13 @@ class DetailFormState extends State<TransactionDetailForm> {
             onSaved: (String? value) {
               model['amount'] = moneyController.numberValue.toInt();
             },
-            onTap: hideOptionsContainer,
+            onTap: () => setOptionsContainerVisible(false),
             keyboardType: TextInputType.number,
           ),
-          GroupInputField(model, groupsController),
-          TagInputField(model, tagsController),
+          GroupInputField(model, groupsController, setOptionsContainerVisible),
+          TagInputField(model, tagsController, setOptionsContainerVisible),
           TextFormField(
+            controller: titleController,
             decoration: InputDecoration(
               icon: Icon(Icons.edit_outlined),
               labelText: 'Title',
@@ -63,7 +68,7 @@ class DetailFormState extends State<TransactionDetailForm> {
             onSaved: (String? value) {
               model['title'] = value ?? '';
             },
-            onTap: hideOptionsContainer,
+            onTap: () => setOptionsContainerVisible(false),
           ),
           SizedBox(
             width: double.infinity,
@@ -78,18 +83,18 @@ class DetailFormState extends State<TransactionDetailForm> {
                   Transaction transaction = Transaction.fromRawMap(model);
                   await TransactionService().insert(transaction);
 
-                  form.reset();
-                  groupsController.clear();
-                  tagsController.clear();
-                  moneyController.clear();
-                  hideOptionsContainer();
+                  moneyController.updateValue(0);
+                  clearController([groupsController, tagsController, titleController]);
+                  setOptionsContainerVisible(false);
+                  FocusScope.of(context).unfocus();
+                  _bloc.eventSink.add(null as DetailFormEvent);
                   toastSuccess('Transaction created');
                 }
               },
               child: Text('Save'),
             ),
           ),
-          SelectOptionsContainer(),
+          SelectOptionsContainer(optionsContainerVisible),
         ],
       ),
     );
