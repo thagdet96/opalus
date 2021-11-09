@@ -4,25 +4,28 @@ import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarState.dart';
 import 'package:opalus/src/models/reponse/groupTransactions.dart';
 import 'package:opalus/src/services/transaction.dart';
 import 'package:opalus/src/views/components/transaction/byDate/transactionsPerDate.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class DateScreen extends StatefulWidget {
   @override
   DateScreenState createState() => DateScreenState();
 }
 
-class DateScreenState extends State<DateScreen>
-    with AutomaticKeepAliveClientMixin<DateScreen> {
+class DateScreenState extends State<DateScreen> with AutomaticKeepAliveClientMixin<DateScreen> {
   List<GroupTransaction> listTransactions = [];
-
+  DateTime selectedDate = DateTime.now();
   final _bloc = TransactionNavBarBloc();
-
+  final scrollDirection = Axis.vertical;
+  late AutoScrollController controller;
   @override
   bool get wantKeepAlive => true;
 
   @override
   initState() {
     super.initState();
-    getListTransactionGroupByDate();
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: scrollDirection);
   }
 
   void dispose() {
@@ -30,9 +33,10 @@ class DateScreenState extends State<DateScreen>
     _bloc.dispose();
   }
 
-  getListTransactionGroupByDate() async {
-    var fetched = await TransactionService().getAndGroupByDate(
-      DateTime.now(),
+  getListTransactionGroupByDate(DateTime selectedDate) async {
+    controller.scrollToIndex(selectedDate.day, preferPosition: AutoScrollPosition.begin);
+    List<GroupTransaction> fetched = await TransactionService().getAndGroupByDate(
+      selectedDate,
       true,
     );
     setState(() {
@@ -43,20 +47,36 @@ class DateScreenState extends State<DateScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     return StreamBuilder(
-        stream: _bloc.state,
-        builder: (BuildContext context,
-            AsyncSnapshot<TransactionNavBarState> snapshot) {
-          TransactionNavBarState state = snapshot.data ?? _bloc.navBarState;
-          DateTime selectedDate = state.selectedDate;
-          print(selectedDate);
+      stream: _bloc.state,
+      initialData: TransactionNavBarState(DateTime.now()),
+      builder: (BuildContext context, AsyncSnapshot<TransactionNavBarState> snapshot) {
+        if (snapshot.hasData && selectedDate != snapshot.data!.selectedDate) {
+          this.selectedDate = snapshot.data!.selectedDate;
+          getListTransactionGroupByDate(selectedDate);
+        }
+        var i = 0;
+        return ListView(
+          scrollDirection: scrollDirection,
+          controller: controller,
+          children: _buildUserGroups(context).map<Widget>((data) {
+            i += 1;
+            return AutoScrollTag(
+              key: ValueKey(i),
+              controller: controller,
+              index: i,
+              child: data,
+              highlightColor: Colors.black.withOpacity(0.1),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
 
-          return ListView.builder(
-              itemCount: listTransactions.length,
-              itemBuilder: (context, index) {
-                return TransactionsPerDate(listTransactions[index]);
-              });
-        });
+  List<Widget> _buildUserGroups(BuildContext context) {
+    return listTransactions.map((a) {
+      return TransactionsPerDate(a);
+    }).toList();
   }
 }
