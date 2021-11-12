@@ -18,6 +18,7 @@ class AddTransactionButton extends StatelessWidget {
                   MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
                       .padding,
               child: Scaffold(
+                resizeToAvoidBottomInset: false,
                 appBar: AppBar(
                   leading: IconButton(
                       icon: Icon(
