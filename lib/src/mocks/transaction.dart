@@ -9,7 +9,7 @@ List<Transaction> mockTransactions = [
     amount: 10000000,
     title: 'lương tháng 5',
     time: DateTime(2021, 5, 5),
-    groups: [mockGroups[1]],
+    // groups: [mockGroups[1]],
     tags: [mockTags[0]],
   ),
   Transaction(
@@ -18,7 +18,7 @@ List<Transaction> mockTransactions = [
     amount: 300000,
     title: 'sushi',
     time: DateTime(2021, 5, 5),
-    groups: [mockGroups[0]],
+    // groups: [mockGroups[0]],
     tags: [mockTags[2], mockTags[3]],
   ),
   Transaction(
@@ -26,7 +26,7 @@ List<Transaction> mockTransactions = [
     type: 'outcome',
     amount: 50000,
     time: DateTime(2021, 5, 6),
-    groups: [mockGroups[1]],
+    // groups: [mockGroups[1]],
     tags: [mockTags[1]],
   ),
   Transaction(
@@ -35,7 +35,7 @@ List<Transaction> mockTransactions = [
     amount: 11000000,
     title: 'thưởng tháng 5',
     time: DateTime(2021, 5, 5),
-    groups: [mockGroups[1]],
+    // groups: [mockGroups[1]],
     tags: [mockTags[0]],
   ),
   Transaction(
@@ -43,7 +43,7 @@ List<Transaction> mockTransactions = [
     type: 'outcome',
     amount: 200000,
     time: DateTime(2021, 5, 15),
-    groups: [mockGroups[0]],
+    // groups: [mockGroups[0]],
     tags: [mockTags[3]],
   ),
   Transaction(
@@ -51,7 +51,7 @@ List<Transaction> mockTransactions = [
     type: 'outcome',
     amount: 150000,
     time: DateTime(2021, 2, 6),
-    groups: [mockGroups[0]],
+    // groups: [mockGroups[0]],
     tags: [mockTags[3]],
   ),
   Transaction(
@@ -59,6 +59,6 @@ List<Transaction> mockTransactions = [
     type: 'income',
     amount: 10000,
     time: DateTime(2021, 2, 7),
-    groups: [mockGroups[0]],
+    // groups: [mockGroups[0]],
   ),
 ];

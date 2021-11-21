@@ -49,6 +49,15 @@ class Group {
     );
   }
 
+  factory Group.fromRawMap(Map<String, dynamic> map) {
+    return Group(
+      id: map['id'],
+      name: map['name'],
+      tags: map['tags'],
+      budget: map['budget'],
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory Group.fromJson(String source) => Group.fromMap(json.decode(source));

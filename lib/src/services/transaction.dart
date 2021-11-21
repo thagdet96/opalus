@@ -11,7 +11,7 @@ class TransactionService extends BaseService<Transaction> {
   final dbName = Transaction.dbName;
   final Map<String, BaseService> mappingFields = {
     'tags': TagService(),
-    'groups': GroupService(),
+    // 'groups': GroupService(),
   };
 
   @override

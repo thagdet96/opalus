@@ -49,10 +49,7 @@ class Tag {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Tag &&
-        other.id == id &&
-        other.name == name &&
-        other.loop == loop;
+    return other is Tag && other.id == id && other.name == name && other.loop == loop;
   }
 
   @override

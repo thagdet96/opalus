@@ -4,9 +4,9 @@ abstract class DetailFormEvent {}
 
 class DetailFormInit<T> extends DetailFormEvent {
   final List<T> models;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
-  DetailFormInit(this.models, this.controller);
+  DetailFormInit(this.models, [this.controller]);
 }
 
 class DetailFormTap<T> extends DetailFormEvent {

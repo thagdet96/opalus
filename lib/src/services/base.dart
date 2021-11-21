@@ -104,19 +104,15 @@ class BaseService<T> {
       );
 
       fieldAllIds.removeWhere((id) => id == '');
-      var fieldData = fieldAllIds.isEmpty
-          ? []
-          : await service.getByListId(fieldAllIds.join(','));
+      var fieldData = fieldAllIds.isEmpty ? [] : await service.getByListId(fieldAllIds.map((id) => "'$id'").join(','));
 
       if (fieldData.isNotEmpty) {
         mappedRaw = mappedRaw.map((e) {
           Map<String, dynamic> clone = Map.from(e);
-          List<String> fieldIds =
-              clone[key] != null ? clone[key].split(',') : [];
+          List<String> fieldIds = clone[key] != null ? clone[key].split(',') : [];
           var mappedField = fieldIds
               .map(
-                (id) => fieldData.firstWhere((data) => data.id == id,
-                    orElse: () => null),
+                (id) => fieldData.firstWhere((data) => data.id == id, orElse: () => null),
               )
               .toList();
 

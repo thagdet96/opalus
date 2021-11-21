@@ -12,24 +12,24 @@ class TransactionRow extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Tag> tags = transaction.tags ?? [];
 
-    return ListTile(
-      visualDensity: VisualDensity(vertical: -4),
-      leading: Container(
-        width: 60,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: transaction.groups.map(getName).toList(),
-        ),
-      ),
-      title: getName(transaction),
-      subtitle: Text(
-        tags.map((t) => t.name).join(', '),
-        style: TextStyle(height: 1.2),
-      ),
-      trailing: convertToCurrency(
-        transaction.amount,
-        style: MyTheme.regularCurrency(context, transaction.type),
-      ),
-    );
+    return Row(
+        // visualDensity: VisualDensity(vertical: -4),
+        children: [
+          Container(
+            constraints: BoxConstraints(minWidth: 90, minHeight: 50),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: tags.map(getName).toList(),
+            ),
+          ),
+          Expanded(child: getName(transaction)),
+          Container(
+            width: 80,
+            child: convertToCurrency(
+              transaction.amount,
+              style: MyTheme.regularCurrency(context, transaction.type),
+            ),
+          ),
+        ]);
   }
 }

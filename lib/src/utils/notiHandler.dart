@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 void toastError(msg) {
   Fluttertoast.showToast(
-    //Currently leave this as err message to see which error shows here in real case
     msg: msg.toString(),
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.TOP,
@@ -13,7 +12,6 @@ void toastError(msg) {
 
 void toastInfo(msg) {
   Fluttertoast.showToast(
-    //Currently leave this as err message to see which error shows here in real case
     msg: msg.toString(),
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.TOP,
@@ -23,7 +21,6 @@ void toastInfo(msg) {
 
 void toastSuccess(msg) {
   Fluttertoast.showToast(
-    //Currently leave this as err message to see which error shows here in real case
     msg: msg.toString(),
     toastLength: Toast.LENGTH_SHORT,
     gravity: ToastGravity.TOP,

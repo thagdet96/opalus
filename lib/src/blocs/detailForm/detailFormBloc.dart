@@ -25,11 +25,11 @@ class DetailFormBloc {
 
   void _mapEventToState(DetailFormEvent event) {
     if (event is DetailFormInit<Group>) {
-      _detailFormState.controller = event.controller;
+      _detailFormState.controller = event.controller ?? _detailFormState.controller;
       _detailFormState.models = event.models;
       _detailFormState.groups = event.models;
     } else if (event is DetailFormInit<Tag>) {
-      _detailFormState.controller = event.controller;
+      _detailFormState.controller = event.controller ?? _detailFormState.controller;
       _detailFormState.models = event.models;
       _detailFormState.tags = event.models;
     } else if (event is DetailFormTap<Group>) {
