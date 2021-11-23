@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.opalus">
    <application
-        android:label="opalus"
+        android:label="Money Note"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
