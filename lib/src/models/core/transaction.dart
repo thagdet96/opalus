@@ -59,6 +59,19 @@ class Transaction {
     };
   }
 
+  Map<String, dynamic> toRawMap() {
+    return {
+      'id': id,
+      'type': type,
+      'amount': amount,
+      'time': time.millisecondsSinceEpoch,
+      'title': title,
+      // 'groups': groups,
+      'tags': tags,
+      'metadata': metadata,
+    };
+  }
+
   factory Transaction.fromMap(Map<String, dynamic> map) {
     // List<Group> groups = map['groups'] is List ? List.from(map['groups']) : [];
     List<Tag> tags = map['tags'] is List ? List.from(map['tags']) : [];

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:opalus/src/blocs/detailForm/detailFormBloc.dart';
 import 'package:opalus/src/blocs/detailForm/detailFormEvent.dart';
 import 'package:opalus/src/models/core/transaction.dart';
 import 'package:opalus/src/services/transaction.dart';
 import 'package:opalus/src/views/components/common/detailForm/index.dart';
 import 'package:opalus/src/utils/notiHandler.dart';
+import './saveButton.dart';
 import './toggleType.dart';
 import 'package:uuid/uuid.dart';
 
 class TransactionDetail extends StatefulWidget {
-  const TransactionDetail({Key? key}) : super(key: key);
+  final Transaction? transaction;
+
+  const TransactionDetail({this.transaction, Key? key}) : super(key: key);
 
   @override
   State<TransactionDetail> createState() => TransactionDetailState();
@@ -21,7 +25,23 @@ class TransactionDetailState extends State<TransactionDetail> {
   Map<String, dynamic> model = {};
   final TextEditingController tagsController = TextEditingController();
   final TextEditingController titleController = TextEditingController();
+  final moneyController = MoneyMaskedTextController(
+    precision: 0,
+    decimalSeparator: '',
+  );
+
   bool optionsContainerVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.transaction is Transaction) {
+      model = widget.transaction!.toRawMap();
+
+      moneyController.updateValue(model['amount'].toDouble());
+      titleController.text = model['title'];
+    }
+  }
 
   void setOptionsContainerVisible(bool val) {
     setState(() {
@@ -68,30 +88,14 @@ class TransactionDetailState extends State<TransactionDetail> {
             },
             onTap: () => setOptionsContainerVisible(false),
           ),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () async {
-                var form = _formKey.currentState;
-                if (form != null && form.validate()) {
-                  form.save();
-
-                  String id = Uuid().v4();
-                  model['id'] = id;
-                  Transaction transaction = Transaction.fromRawMap(model);
-                  await TransactionService().insert(transaction);
-
-                  moneyController.updateValue(0);
-                  clearController([tagsController, titleController]);
-                  setOptionsContainerVisible(false);
-                  FocusScope.of(context).unfocus();
-                  _bloc.eventSink.add(null as DetailFormEvent);
-                  toastSuccess('Transaction created');
-                }
-              },
-              child: Text('Save'),
-            ),
-          ),
+          SaveButton(model, formKey: _formKey, actionAfterSave: () {
+            model['id'] = null;
+            moneyController.updateValue(0);
+            clearController([tagsController, titleController]);
+            setOptionsContainerVisible(false);
+            FocusScope.of(context).unfocus();
+            _bloc.eventSink.add(null as DetailFormEvent);
+          }),
           SelectOptionsContainer(optionsContainerVisible),
         ],
       ),

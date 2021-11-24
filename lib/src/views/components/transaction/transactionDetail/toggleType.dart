@@ -17,7 +17,11 @@ class _ToggleType extends State<ToggleType> {
   @override
   void initState() {
     super.initState();
-    widget.model['type'] = TRANSACTION_TYPE.OUTCOME;
+    if (widget.model['type'] == null) {
+      widget.model['type'] = TRANSACTION_TYPE.OUTCOME;
+    } else {
+      isOutcome = widget.model['type'] == TRANSACTION_TYPE.OUTCOME;
+    }
   }
 
   @override
