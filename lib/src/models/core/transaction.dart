@@ -9,7 +9,7 @@ class Transaction {
   final int amount;
   final DateTime time;
   final String? title;
-  final List<Group> groups;
+  // final List<Group>? groups;
   final List<Tag>? tags;
   final dynamic? metadata;
 
@@ -19,7 +19,7 @@ class Transaction {
     required this.amount,
     required this.time,
     this.title,
-    required this.groups,
+    // required this.groups,
     this.tags,
     this.metadata,
   });
@@ -30,7 +30,7 @@ class Transaction {
     int? amount,
     DateTime? time,
     String? title,
-    List<Group>? groups,
+    // List<Group>? groups,
     List<Tag>? tags,
     dynamic? metadata,
   }) {
@@ -40,7 +40,7 @@ class Transaction {
       amount: amount ?? this.amount,
       time: time ?? this.time,
       title: title ?? this.title,
-      groups: groups ?? this.groups,
+      // groups: groups ?? this.groups,
       tags: tags ?? this.tags,
       metadata: metadata ?? this.metadata,
     );
@@ -53,14 +53,14 @@ class Transaction {
       'amount': amount,
       'time': time.millisecondsSinceEpoch,
       'title': title,
-      'groups': groups.map((x) => x.id).join(','),
+      // 'groups': groups.map((x) => x.id).join(','),
       'tags': tags?.map((x) => x.id).join(','),
       'metadata': metadata,
     };
   }
 
   factory Transaction.fromMap(Map<String, dynamic> map) {
-    List<Group> groups = map['groups'] is List ? List.from(map['groups']) : [];
+    // List<Group> groups = map['groups'] is List ? List.from(map['groups']) : [];
     List<Tag> tags = map['tags'] is List ? List.from(map['tags']) : [];
 
     return Transaction(
@@ -69,7 +69,7 @@ class Transaction {
       amount: map['amount'],
       time: DateTime.fromMillisecondsSinceEpoch(map['time']),
       title: map['title'],
-      groups: groups,
+      // groups: groups,
       tags: tags,
       metadata: map['metadata'],
     );
@@ -82,7 +82,7 @@ class Transaction {
       amount: map['amount'],
       time: map['time'],
       title: map['title'],
-      groups: map['groups'],
+      // groups: map['groups'],
       tags: map['tags'],
       metadata: map['metadata'],
     );
@@ -90,12 +90,11 @@ class Transaction {
 
   String toJson() => json.encode(toMap());
 
-  factory Transaction.fromJson(String source) =>
-      Transaction.fromMap(json.decode(source));
+  factory Transaction.fromJson(String source) => Transaction.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'Transaction(id: $id, type: $type, amount: $amount, time: $time, title: $title, groups: $groups, tags: $tags, metadata: $metadata)';
+    return 'Transaction(id: $id, type: $type, amount: $amount, time: $time, title: $title, tags: $tags, metadata: $metadata)';
   }
 
   @override
@@ -108,7 +107,7 @@ class Transaction {
         other.amount == amount &&
         other.time == time &&
         other.title == title &&
-        listEquals(other.groups, groups) &&
+        // listEquals(other.groups, groups) &&
         listEquals(other.tags, tags) &&
         other.metadata == metadata;
   }
@@ -120,7 +119,7 @@ class Transaction {
         amount.hashCode ^
         time.hashCode ^
         title.hashCode ^
-        groups.hashCode ^
+        // groups.hashCode ^
         tags.hashCode ^
         metadata.hashCode;
   }
@@ -135,7 +134,7 @@ class Transaction {
         amount INTEGER NOT NULL,
         time INTERGER NOT NULL,
         title TEXT,
-        groups TEXT NOT NULL,
+        groups TEXT,
         tags TEXT,
         metadata TEXT
       );

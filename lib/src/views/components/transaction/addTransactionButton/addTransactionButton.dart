@@ -14,9 +14,7 @@ class AddTransactionButton extends StatelessWidget {
           isScrollControlled: true,
           builder: (BuildContext context) {
             return Padding(
-              padding:
-                  MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
-                      .padding,
+              padding: MediaQueryData.fromWindow(WidgetsBinding.instance!.window).padding,
               child: Scaffold(
                 resizeToAvoidBottomInset: false,
                 appBar: AppBar(
@@ -28,7 +26,10 @@ class AddTransactionButton extends StatelessWidget {
                       ),
                       onPressed: () => Navigator.pop(context)),
                 ),
-                body: TransactionDetail(),
+                body: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: TransactionDetail(),
+                ),
               ),
             );
           },

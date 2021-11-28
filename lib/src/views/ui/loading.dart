@@ -38,10 +38,7 @@ class LoadingScreen extends StatelessWidget {
         navigateAfterFuture: loadFromFuture(),
         loadingText: Text(
           'Opalus',
-          style: TextStyle(
-              color: MyTheme.secondaryColor(),
-              fontWeight: FontWeight.bold,
-              fontSize: 24.0),
+          style: TextStyle(color: MyTheme.secondaryColor(), fontWeight: FontWeight.bold, fontSize: 24.0),
         ),
         image: Image.asset('assets/gif/loading.gif'),
         backgroundColor: MyTheme.primaryColor(),
