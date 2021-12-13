@@ -52,31 +52,23 @@ class DateScreenState extends State<DateScreen> with AutomaticKeepAliveClientMix
       initialData: TransactionNavBarState(DateTime.now()),
       builder: (BuildContext context, AsyncSnapshot<TransactionNavBarState> snapshot) {
         if (snapshot.hasData && selectedDate != snapshot.data!.selectedDate) {
-          this.selectedDate = snapshot.data!.selectedDate;
+          selectedDate = snapshot.data!.selectedDate;
           getListTransactionGroupByDate(selectedDate);
         }
-        var i = 0;
         return ListView(
           scrollDirection: scrollDirection,
           controller: controller,
-          children: _buildUserGroups(context).map<Widget>((data) {
-            i += 1;
+          children: listTransactions.map((groupTransaction) {
             return AutoScrollTag(
-              key: ValueKey(i),
+              key: ValueKey(groupTransaction.time.day),
               controller: controller,
-              index: i,
-              child: data,
+              index: groupTransaction.time.day,
+              child: TransactionsPerDate(groupTransaction),
               highlightColor: Colors.black.withOpacity(0.1),
             );
           }).toList(),
         );
       },
     );
-  }
-
-  List<Widget> _buildUserGroups(BuildContext context) {
-    return listTransactions.map((a) {
-      return TransactionsPerDate(a);
-    }).toList();
   }
 }
