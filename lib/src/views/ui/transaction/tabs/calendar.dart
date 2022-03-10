@@ -52,11 +52,17 @@ class Calendar extends StatelessWidget {
               events: _events,
               onCellTapped: (DateTime date) {
                 _controller.animateTo(1);
-                Future.delayed(const Duration(milliseconds: 300), () => _bloc.eventSink.add(SelectDateEvent(date)));
+                Future.delayed(Duration(milliseconds: 300), () => _bloc.eventSink.add(SelectDateEvent(date)));
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return Center(
+              child: SizedBox(
+                width: 150,
+                height: 150,
+                child: CircularProgressIndicator(),
+              ),
+            );
           }
         });
   }

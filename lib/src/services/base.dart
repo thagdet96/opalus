@@ -22,6 +22,38 @@ class BaseService<T> {
     }
   }
 
+  Future<int> update(String id, T model) async {
+    try {
+      Database db = await instance.database;
+
+      return await db.update(
+        dbName,
+        toMap(model),
+        where: 'id = ?',
+        whereArgs: [id],
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch (err) {
+      toastError(err);
+      return 0;
+    }
+  }
+
+  Future<int> delete(String id) async {
+    try {
+      Database db = await instance.database;
+
+      return await db.delete(
+        dbName,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (err) {
+      toastError(err);
+      return 0;
+    }
+  }
+
   Future<List<T>> getAll() async {
     try {
       Database db = await instance.database;

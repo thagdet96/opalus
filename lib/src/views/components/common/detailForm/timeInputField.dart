@@ -6,12 +6,18 @@ import 'utils.dart';
 const pattern = 'yyyy-MM-dd';
 
 class TimeInputField extends StatelessWidget {
-  final DateTime _selectedTime = DateTime.now();
+  late final DateTime _selectedTime;
   final Map<String, dynamic> model;
   final hideOptionsContainer;
   final FocusNode _focus = new FocusNode();
 
-  TimeInputField(this.model, this.hideOptionsContainer);
+  TimeInputField(this.model, this.hideOptionsContainer) {
+    if (model['time'] != null) {
+      _selectedTime = model['time'] is DateTime ? model['time'] : DateTime.fromMillisecondsSinceEpoch(model['time']);
+    } else {
+      _selectedTime = DateTime.now();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
