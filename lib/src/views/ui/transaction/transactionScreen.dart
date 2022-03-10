@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarBloc.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/ui/transaction/tabs/index.dart';
 import 'package:opalus/src/views/components/transaction/addTransactionButton/addTransactionButton.dart';
@@ -9,10 +8,8 @@ class TransactionScreen extends StatefulWidget {
   TransactionScreenState createState() => TransactionScreenState();
 }
 
-class TransactionScreenState extends State<TransactionScreen>
-    with SingleTickerProviderStateMixin {
+class TransactionScreenState extends State<TransactionScreen> with SingleTickerProviderStateMixin {
   late TabController _controller;
-  final _bloc = TransactionNavBarBloc();
 
   @override
   void initState() {
@@ -23,7 +20,6 @@ class TransactionScreenState extends State<TransactionScreen>
   @override
   void dispose() {
     _controller.dispose();
-    _bloc.dispose();
     super.dispose();
   }
 
