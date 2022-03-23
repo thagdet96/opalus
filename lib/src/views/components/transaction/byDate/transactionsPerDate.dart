@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:opalus/src/models/index.dart';
 import 'package:opalus/src/utils/constants.dart';
-import 'package:opalus/src/models/reponse/groupTransactions.dart';
+import 'package:opalus/src/models/response/groupTransactions.dart';
 import 'package:opalus/src/utils/formats.dart';
 import 'transactionRow.dart';
 import 'package:opalus/src/utils/myTheme.dart';

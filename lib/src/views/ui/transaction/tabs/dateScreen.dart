@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarBloc.dart';
 import 'package:opalus/src/blocs/transactionNavBar/transactionNavBarState.dart';
-import 'package:opalus/src/models/reponse/groupTransactions.dart';
+import 'package:opalus/src/models/response/groupTransactions.dart';
 import 'package:opalus/src/services/transaction.dart';
 import 'package:opalus/src/views/components/transaction/byDate/transactionsPerDate.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';

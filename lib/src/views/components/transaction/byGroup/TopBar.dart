@@ -17,21 +17,21 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
       child: Row(
         children: [
           SummarizedTopItem(
-            title: 'Income',
+            title: CONSTANT_TEXT.INCOME,
             amount: convertToCurrency(
               totalIncome,
               style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.INCOME),
             ),
           ),
           SummarizedTopItem(
-            title: 'Outcome',
+            title: CONSTANT_TEXT.OUTCOME,
             amount: convertToCurrency(
               totalOutcome,
               style: MyTheme.bigCurrency(context, TRANSACTION_TYPE.OUTCOME),
             ),
           ),
           SummarizedTopItem(
-            title: 'Total',
+            title: CONSTANT_TEXT.TOTAL,
             amount: convertToCurrency(
               totalIncome - totalOutcome,
               style: MyTheme.bigCurrency(context),

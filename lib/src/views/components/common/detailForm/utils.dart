@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-const errorMessage = 'This field is required';
-
 class Model {
   final String id;
   Model(this.id);

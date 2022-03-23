@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:opalus/src/models/reponse/groupTransactions.dart';
+import 'package:opalus/src/models/response/groupTransactions.dart';
 import 'package:opalus/src/services/transaction.dart';
 import 'package:opalus/src/views/components/transaction/byGroup/index.dart';
 

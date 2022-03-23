@@ -141,12 +141,10 @@ class BaseService<T> {
       if (fieldData.isNotEmpty) {
         mappedRaw = mappedRaw.map((e) {
           Map<String, dynamic> clone = Map.from(e);
-          List<String> fieldIds = clone[key] != null ? clone[key].split(',') : [];
-          var mappedField = fieldIds
-              .map(
-                (id) => fieldData.firstWhere((data) => data.id == id, orElse: () => null),
-              )
-              .toList();
+          List<String> fieldIds = (clone[key]?.isEmpty ?? true) ? [] : clone[key].split(',');
+          var mappedField = fieldIds.isEmpty
+              ? []
+              : fieldIds.map((id) => fieldData.firstWhere((data) => data.id == id, orElse: () => null)).toList();
 
           clone[key] = mappedField;
           return clone;

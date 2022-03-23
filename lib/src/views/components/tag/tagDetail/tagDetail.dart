@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/blocs/detailForm/detailFormBloc.dart';
 import 'package:opalus/src/blocs/detailForm/detailFormEvent.dart';
-import 'package:opalus/src/blocs/detailForm/detailFormState.dart';
 import 'package:opalus/src/models/core/tag.dart';
 import 'package:opalus/src/services/tag.dart';
 import 'package:opalus/src/utils/notiHandler.dart';
-import 'package:opalus/src/views/components/common/detailForm/index.dart';
+import 'package:opalus/src/utils/constants.dart';
 import 'package:uuid/uuid.dart';
 
 class TagDetail extends StatefulWidget {
@@ -34,7 +33,7 @@ class TagDetailState extends State<TagDetail> {
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return errorMessage;
+                return CONSTANT_TEXT.ERROR_REQUIRED_FIELD;
               }
               return null;
             },

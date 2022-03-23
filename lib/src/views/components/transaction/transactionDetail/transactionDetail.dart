@@ -3,12 +3,10 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:opalus/src/blocs/detailForm/detailFormBloc.dart';
 import 'package:opalus/src/blocs/detailForm/detailFormEvent.dart';
 import 'package:opalus/src/models/core/transaction.dart';
-import 'package:opalus/src/services/transaction.dart';
 import 'package:opalus/src/views/components/common/detailForm/index.dart';
-import 'package:opalus/src/utils/notiHandler.dart';
 import './saveButton.dart';
+import 'package:opalus/src/utils/constants.dart';
 import './toggleType.dart';
-import 'package:uuid/uuid.dart';
 
 class TransactionDetail extends StatefulWidget {
   final Transaction? transaction;
@@ -66,7 +64,7 @@ class TransactionDetailState extends State<TransactionDetail> {
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
-                return errorMessage;
+                return CONSTANT_TEXT.ERROR_REQUIRED_FIELD;
               }
               return null;
             },

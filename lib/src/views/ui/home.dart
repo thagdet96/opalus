@@ -3,15 +3,11 @@ import 'package:opalus/src/blocs/bottomBar/bottomBarBloc.dart';
 import 'package:opalus/src/blocs/bottomBar/bottomBarState.dart';
 import 'package:opalus/src/mocks/emptyPage.dart';
 import 'package:opalus/src/utils/myTheme.dart';
+import 'package:opalus/src/views/ui/statistic/statisticScreen.dart';
 import 'package:opalus/src/views/ui/transaction/transactionScreen.dart';
 import '../components/index.dart';
 
-List<Widget> screens = [
-  TransactionScreen(),
-  EmptyPage('1'),
-  EmptyPage('2'),
-  EmptyPage('3')
-];
+List<Widget> screens = [TransactionScreen(), StatisticScreen(), EmptyPage('2'), EmptyPage('3')];
 
 class MyHomePage extends StatelessWidget {
   final title;

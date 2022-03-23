@@ -5,6 +5,7 @@ import 'package:opalus/src/blocs/detailForm/detailFormState.dart';
 import 'package:opalus/src/models/core/group.dart';
 import 'package:opalus/src/services/group.dart';
 import 'utils.dart';
+import 'package:opalus/src/utils/constants.dart';
 
 class GroupInputField extends StatelessWidget {
   final _bloc = DetailFormBloc();
@@ -28,7 +29,7 @@ class GroupInputField extends StatelessWidget {
           ),
           validator: (String? value) {
             if (value == null || value.isEmpty) {
-              return errorMessage;
+              return CONSTANT_TEXT.ERROR_REQUIRED_FIELD;
             }
             return null;
           },

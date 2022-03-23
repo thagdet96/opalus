@@ -1,7 +1,7 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'utils.dart';
+import 'package:opalus/src/utils/constants.dart';
 
 const pattern = 'yyyy-MM-dd';
 
@@ -36,7 +36,7 @@ class TimeInputField extends StatelessWidget {
       initialValue: DateFormat(pattern).format(_selectedTime),
       validator: (String? value) {
         if (value == null || value.isEmpty) {
-          return errorMessage;
+          return CONSTANT_TEXT.ERROR_REQUIRED_FIELD;
         }
         return null;
       },
