@@ -6,7 +6,7 @@ import 'package:opalus/src/views/components/transaction/byGroup/summarizedTopIte
 
 class TotalBar extends StatelessWidget implements PreferredSizeWidget {
   final int total;
-  Size get preferredSize => const Size.fromHeight(64);
+  Size get preferredSize => const Size.fromHeight(80);
 
   TotalBar({required this.total});
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/models/response/groupTransactionsByTag.dart';
 import 'package:opalus/src/services/transaction.dart';
-import './TotalBar.dart';
-import './Row.dart';
+import '../../components/statistic/content/TotalBar.dart';
+import '../../components/statistic/content/Row.dart';
 
 class ListByTag extends StatefulWidget {
   final String type;

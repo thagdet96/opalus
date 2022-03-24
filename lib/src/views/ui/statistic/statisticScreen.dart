@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/myTheme.dart';
-import 'package:opalus/src/views/components/statistic/listByTag/ListByTag.dart';
+import './ListByTag.dart';
 
 class StatisticScreen extends StatefulWidget {
   @override
