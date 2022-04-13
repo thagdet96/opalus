@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/myTheme.dart';
-import './ListByTag.dart';
+import '../../components/statistic/content/ListByTag.dart';
 
 class StatisticScreen extends StatefulWidget {
   @override
   StatisticScreenState createState() => StatisticScreenState();
 }
 
-class StatisticScreenState extends State<StatisticScreen> with SingleTickerProviderStateMixin {
+class StatisticScreenState extends State<StatisticScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _controller;
 
   @override

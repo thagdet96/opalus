@@ -6,19 +6,23 @@ import 'package:opalus/src/views/components/transaction/byGroup/summarizedTopIte
 
 class TotalBar extends StatelessWidget implements PreferredSizeWidget {
   final int total;
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize => const Size.fromHeight(64);
 
   TotalBar({required this.total});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: SummarizedTopItem(
-        title: CONSTANT_TEXT.TOTAL,
-        amount: convertToCurrency(
-          total,
-          style: MyTheme.bigCurrency(context),
-        ),
+      child: Row(
+        children: [
+          SummarizedTopItem(
+            title: CONSTANT_TEXT.TOTAL,
+            amount: convertToCurrency(
+              total,
+              style: MyTheme.bigCurrency(context),
+            ),
+          ),
+        ],
       ),
     );
   }

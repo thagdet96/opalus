@@ -15,13 +15,13 @@ class LoadingScreen extends StatelessWidget {
   Future<Widget> loadFromFuture() async {
     bool isDBExist = await Connection.instance.isDBExist();
     if (!isDBExist) {
-      TransactionService transactionService = TransactionService();
-      GroupService groupService = GroupService();
-      TagService tagService = TagService();
+      // TransactionService transactionService = TransactionService();
+      // GroupService groupService = GroupService();
+      // TagService tagService = TagService();
 
-      Future.wait(mockTransactions.map(transactionService.insert));
-      Future.wait(mockTags.map(tagService.insert));
-      Future.wait(mockGroups.map(groupService.insert));
+      // Future.wait(mockTransactions.map(transactionService.insert));
+      // Future.wait(mockTags.map(tagService.insert));
+      // Future.wait(mockGroups.map(groupService.insert));
     } else {
       // await Future.delayed(const Duration(seconds: 2));
       // var t = await TransactionService().getAll();
@@ -38,7 +38,10 @@ class LoadingScreen extends StatelessWidget {
         navigateAfterFuture: loadFromFuture(),
         loadingText: Text(
           'Opalus',
-          style: TextStyle(color: MyTheme.secondaryColor(), fontWeight: FontWeight.bold, fontSize: 24.0),
+          style: TextStyle(
+              color: MyTheme.secondaryColor(),
+              fontWeight: FontWeight.bold,
+              fontSize: 24.0),
         ),
         image: Image.asset('assets/gif/loading.gif'),
         backgroundColor: MyTheme.primaryColor(),
