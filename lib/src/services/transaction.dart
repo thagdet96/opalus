@@ -261,56 +261,62 @@ class TransactionService extends BaseService<Transaction> {
     DateTime endDate,
     List<String> tagIds,
   ) async {
-    sqflite.Database db = await instance.database;
+    try {
+      sqflite.Database db = await instance.database;
 
-    List<Map<String, dynamic>> raw = await db.query(
-      dbName,
-      where: '( time BETWEEN ? AND ? )',
-      whereArgs: [
-        startDate.millisecondsSinceEpoch,
-        endDate.millisecondsSinceEpoch
-      ],
-    );
+      List<Map<String, dynamic>> raw = await db.query(
+        dbName,
+        where: '( time BETWEEN ? AND ? )',
+        whereArgs: [
+          startDate.millisecondsSinceEpoch,
+          endDate.millisecondsSinceEpoch
+        ],
+      );
 
-    List<Map<String, dynamic>> filtered = raw
-        .where(
-          (e) =>
-              tagIds.any((id) => e['tags'] != null && e['tags'].contains(id)),
-        )
-        .toList();
+      List<Map<String, dynamic>> filtered = raw
+          .where(
+            (e) =>
+                tagIds.any((id) => e['tags'] != null && e['tags'].contains(id)),
+          )
+          .toList();
 
-    var transactions = (await join(filtered)).map(fromMap);
-    int total = 0;
-    List<SummarizeTag> groups = transactions.fold([], (cur, trans) {
-      total += trans.amount;
+      var transactions = (await join(filtered)).map(fromMap);
+      int total = 0;
+      List<SummarizeTag> groups = transactions.fold([], (cur, trans) {
+        total += trans.amount;
 
-      List<Tag> tags = trans.tags!.where((e) => tagIds.contains(e.id)).toList();
+        List<Tag> tags =
+            trans.tags!.where((e) => tagIds.contains(e.id)).toList();
 
-      tags.forEach((tag) {
-        int index = cur.indexWhere((g) => g.tag.id == tag.id);
+        tags.forEach((tag) {
+          int index = cur.indexWhere((g) => g.tag.id == tag.id);
 
-        var group = index != -1
-            ? cur[index]
-            : SummarizeTag(
-                tag: tag,
-                amount: 0,
-              );
+          var group = index != -1
+              ? cur[index]
+              : SummarizeTag(
+                  tag: tag,
+                  amount: 0,
+                );
 
-        var mapped = group.toMap();
-        mapped['amount'] +=
-            (trans.type == TRANSACTION_TYPE.OUTCOME ? 1 : -1) * trans.amount;
-        var newGroup = SummarizeTag.fromMap(mapped);
+          var mapped = group.toMap();
+          mapped['amount'] +=
+              (trans.type == TRANSACTION_TYPE.OUTCOME ? 1 : -1) * trans.amount;
+          var newGroup = SummarizeTag.fromMap(mapped);
 
-        if (index != -1) {
-          cur[index] = newGroup;
-        } else {
-          cur.add(newGroup);
-        }
+          if (index != -1) {
+            cur[index] = newGroup;
+          } else {
+            cur.add(newGroup);
+          }
+        });
+
+        return cur;
       });
 
-      return cur;
-    });
-
-    return TotalSummarizeTag(total: total, summarizeTags: groups);
+      return TotalSummarizeTag(total: total, summarizeTags: groups);
+    } catch (err) {
+      toastError(err);
+      return TotalSummarizeTag(total: 0, summarizeTags: []);
+    }
   }
 }
