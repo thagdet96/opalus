@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:opalus/src/models/response/summarizeTag.dart';
+import 'package:opalus/src/utils/constants.dart';
 import 'package:opalus/src/utils/formats.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 
@@ -30,13 +31,25 @@ class RowTagBudget extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Container(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              convertToCurrency(
+                summarizeTag.budget,
+              )
+            ],
+          ),
         ),
         Container(
           width: 100,
           child: convertToCurrency(
             summarizeTag.amount,
-            // style: MyTheme.regularCurrency(context, transactionsByTag.type),
+            style: MyTheme.regularCurrency(
+              context,
+              summarizeTag.amount > summarizeTag.budget
+                  ? TRANSACTION_TYPE.OUTCOME
+                  : TRANSACTION_TYPE.INCOME,
+            ),
           ),
         ),
       ],

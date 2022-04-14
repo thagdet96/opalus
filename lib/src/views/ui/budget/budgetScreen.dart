@@ -3,8 +3,8 @@ import 'package:month_year_picker/month_year_picker.dart';
 import 'package:opalus/src/models/response/summarizeTag.dart';
 import 'package:opalus/src/services/tag.dart';
 import 'package:opalus/src/services/transaction.dart';
+import 'package:opalus/src/views/components/budget/BudgetBar.dart';
 import 'package:opalus/src/views/components/budget/rowTagBudget.dart';
-import 'package:opalus/src/views/components/statistic/header/TotalBar.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
 class BudgetScreen extends StatefulWidget {
@@ -17,7 +17,8 @@ class BudgetScreenState extends State<BudgetScreen> {
   final tagService = TagService();
   DateTime date = DateTime.now();
   late final List<SummarizeTag> budgetTags;
-  int total = 0;
+  int totalAmount = 0;
+  int totalBudget = 0;
   List<SummarizeTag> summarizeTags = [];
 
   @override
@@ -28,15 +29,23 @@ class BudgetScreenState extends State<BudgetScreen> {
 
   onMounted() async {
     var allTags = await tagService.getAll();
+    int allBudget = 0;
     budgetTags = await allTags.fold([], (previousValue, tag) async {
       int budget = int.parse(
         await Settings().getString(tag.name + '-setting', '0'),
       );
 
-      if (budget == 0) return previousValue == null ? [] : previousValue;
+      if (budget == 0) return previousValue;
 
-      (await previousValue).add(SummarizeTag(tag: tag, amount: budget));
+      (await previousValue)
+          .add(SummarizeTag(tag: tag, budget: budget, amount: 0));
+      allBudget += budget;
+
       return previousValue;
+    });
+
+    setState(() {
+      totalBudget = allBudget;
     });
 
     summarizeBudgetTag();
@@ -60,16 +69,14 @@ class BudgetScreenState extends State<BudgetScreen> {
   }
 
   void summarizeBudgetTag() async {
-    var listIds = budgetTags.map((e) => e.tag.id).toList();
-
     var fetched = await transactionService.summarizeBudgetTag(
       DateTime(date.year, date.month, 1),
       DateTime(date.year, date.month + 1, 0),
-      listIds,
+      budgetTags,
     );
 
     setState(() {
-      total = fetched.total;
+      totalAmount = fetched.total;
       summarizeTags = fetched.summarizeTags;
     });
   }
@@ -78,9 +85,6 @@ class BudgetScreenState extends State<BudgetScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: TotalBar(
-        total: total,
-      ),
       body: Column(
         children: [
           Card(
@@ -101,6 +105,7 @@ class BudgetScreenState extends State<BudgetScreen> {
               ],
             ),
           ),
+          BudgetBar(amount: totalAmount, budget: totalBudget),
           Expanded(
             child: ListView.separated(
               itemCount: summarizeTags.length,

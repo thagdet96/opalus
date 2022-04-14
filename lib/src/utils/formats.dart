@@ -44,5 +44,7 @@ Text convertToCurrencyV2(int amount, {TextStyle? style, TextAlign? textAlign}) {
 String getRange({required DateTime startDate, required DateTime endDate}) {
   const String pattern = 'dd/MM';
 
-  return DateFormat(pattern).format(startDate) + ' ~ ' + DateFormat(pattern).format(endDate);
+  return DateFormat(pattern).format(startDate) +
+      ' ~ ' +
+      DateFormat(pattern).format(endDate);
 }
