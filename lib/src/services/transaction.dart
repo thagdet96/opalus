@@ -2,6 +2,8 @@ import 'package:opalus/src/models/core/tag.dart';
 import 'package:opalus/src/models/core/transaction.dart';
 import 'package:opalus/src/models/response/groupTransactions.dart';
 import 'package:opalus/src/models/response/groupTransactionsByTag.dart';
+import 'package:opalus/src/models/response/summarizeTag.dart';
+import 'package:opalus/src/models/response/totalSummarizeTag.dart';
 import 'package:opalus/src/models/response/totalTransactionByTag.dart';
 import 'package:opalus/src/services/base.dart';
 import 'package:opalus/src/services/tag.dart';
@@ -64,7 +66,8 @@ class TransactionService extends BaseService<Transaction> {
       endDate,
     );
 
-    var transactions = expand ? (await join(raw)).map(fromMap) : raw.map(fromMap);
+    var transactions =
+        expand ? (await join(raw)).map(fromMap) : raw.map(fromMap);
     List<GroupTransaction> group = transactions.fold([], (cur, trans) {
       int index = cur.indexWhere((group) => group.time.day == trans.time.day);
       var group = index != -1
@@ -181,7 +184,11 @@ class TransactionService extends BaseService<Transaction> {
       List<Map<String, dynamic>> raw = await db.query(
         dbName,
         where: '( time BETWEEN ? AND ? ) AND ( type = ? )',
-        whereArgs: [startDate.millisecondsSinceEpoch, endDate.millisecondsSinceEpoch, type],
+        whereArgs: [
+          startDate.millisecondsSinceEpoch,
+          endDate.millisecondsSinceEpoch,
+          type
+        ],
       );
 
       List<Map<String, dynamic>> filtered = tagIds == null
@@ -234,15 +241,76 @@ class TransactionService extends BaseService<Transaction> {
       if (otherTransactions.isNotEmpty) {
         groups.add(GroupTransactionByTag(
           type: type,
-          amount: otherTransactions.fold(0, (previousValue, element) => previousValue += element.amount),
+          amount: otherTransactions.fold(
+              0, (previousValue, element) => previousValue += element.amount),
           transactions: otherTransactions,
         ));
       }
 
-      return TotalTransactionByTag(type: type, total: total, groupTransactionByTag: groups);
+      return TotalTransactionByTag(
+          type: type, total: total, groupTransactionByTag: groups);
     } catch (err) {
       toastError(err);
-      return TotalTransactionByTag(type: type, total: 0, groupTransactionByTag: []);
+      return TotalTransactionByTag(
+          type: type, total: 0, groupTransactionByTag: []);
     }
+  }
+
+  Future<TotalSummarizeTag> summarizeBudgetTag(
+    DateTime startDate,
+    DateTime endDate,
+    List<String> tagIds,
+  ) async {
+    sqflite.Database db = await instance.database;
+
+    List<Map<String, dynamic>> raw = await db.query(
+      dbName,
+      where: '( time BETWEEN ? AND ? )',
+      whereArgs: [
+        startDate.millisecondsSinceEpoch,
+        endDate.millisecondsSinceEpoch
+      ],
+    );
+
+    List<Map<String, dynamic>> filtered = raw
+        .where(
+          (e) =>
+              tagIds.any((id) => e['tags'] != null && e['tags'].contains(id)),
+        )
+        .toList();
+
+    var transactions = (await join(filtered)).map(fromMap);
+    int total = 0;
+    List<SummarizeTag> groups = transactions.fold([], (cur, trans) {
+      total += trans.amount;
+
+      List<Tag> tags = trans.tags!.where((e) => tagIds.contains(e.id)).toList();
+
+      tags.forEach((tag) {
+        int index = cur.indexWhere((g) => g.tag.id == tag.id);
+
+        var group = index != -1
+            ? cur[index]
+            : SummarizeTag(
+                tag: tag,
+                amount: 0,
+              );
+
+        var mapped = group.toMap();
+        mapped['amount'] +=
+            (trans.type == TRANSACTION_TYPE.OUTCOME ? 1 : -1) * trans.amount;
+        var newGroup = SummarizeTag.fromMap(mapped);
+
+        if (index != -1) {
+          cur[index] = newGroup;
+        } else {
+          cur.add(newGroup);
+        }
+      });
+
+      return cur;
+    });
+
+    return TotalSummarizeTag(total: total, summarizeTags: groups);
   }
 }
