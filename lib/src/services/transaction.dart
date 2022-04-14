@@ -259,7 +259,7 @@ class TransactionService extends BaseService<Transaction> {
   Future<TotalSummarizeTag> summarizeBudgetTag(
     DateTime startDate,
     DateTime endDate,
-    List<String> tagIds,
+    List<SummarizeTag> budgetTags,
   ) async {
     try {
       sqflite.Database db = await instance.database;
@@ -273,6 +273,7 @@ class TransactionService extends BaseService<Transaction> {
         ],
       );
 
+      List<String> tagIds = budgetTags.map((e) => e.tag.id).toList();
       List<Map<String, dynamic>> filtered = raw
           .where(
             (e) =>
@@ -282,7 +283,7 @@ class TransactionService extends BaseService<Transaction> {
 
       var transactions = (await join(filtered)).map(fromMap);
       int total = 0;
-      List<SummarizeTag> groups = transactions.fold([], (cur, trans) {
+      List<SummarizeTag> groups = transactions.fold(budgetTags, (cur, trans) {
         total += trans.amount;
 
         List<Tag> tags =
@@ -290,24 +291,14 @@ class TransactionService extends BaseService<Transaction> {
 
         tags.forEach((tag) {
           int index = cur.indexWhere((g) => g.tag.id == tag.id);
+          SummarizeTag summarizeTag = cur[index];
 
-          var group = index != -1
-              ? cur[index]
-              : SummarizeTag(
-                  tag: tag,
-                  amount: 0,
-                );
-
-          var mapped = group.toMap();
+          var mapped = summarizeTag.toMap();
           mapped['amount'] +=
               (trans.type == TRANSACTION_TYPE.OUTCOME ? 1 : -1) * trans.amount;
-          var newGroup = SummarizeTag.fromMap(mapped);
+          var newSummarizeTag = SummarizeTag.fromMap(mapped);
 
-          if (index != -1) {
-            cur[index] = newGroup;
-          } else {
-            cur.add(newGroup);
-          }
+          cur[index] = newSummarizeTag;
         });
 
         return cur;

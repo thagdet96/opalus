@@ -73,7 +73,6 @@ class ListByTagState extends State<ListByTag> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TotalBar(total: total),
       body: Column(
         children: [
           TagFilter(
@@ -85,6 +84,7 @@ class ListByTagState extends State<ListByTag> {
             endDate: endDate,
             onChangeDate: onChangeDate,
           ),
+          TotalBar(total: total),
           Expanded(
             child: ListView.separated(
               itemCount: groupTransactionByTag.length,
