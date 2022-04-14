@@ -57,9 +57,6 @@ class ListByTagState extends State<ListByTag> {
         ? null
         : selectedTags.map((tag) => tag.id).toList();
 
-    print(listTagIds);
-    print(startDate);
-    print(endDate);
     var fetched = await transactionService.getAndGroupByTag(
       startDate,
       endDate,

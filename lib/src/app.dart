@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 import 'package:opalus/src/utils/myTheme.dart';
 import 'package:opalus/src/views/ui/loading.dart';
 
@@ -10,10 +11,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: MyTheme.primaryColor(),
         primaryColorLight: MyTheme.primaryColorLight(),
-        accentColor: MyTheme.accentColor(),
+        colorScheme: ColorScheme.fromSeed(seedColor: MyTheme.secondaryColor()),
 
         fontFamily: 'Oswald', // Define the default font family.
       ),
+      localizationsDelegates: [MonthYearPickerLocalizations.delegate],
       home: LoadingScreen(),
     );
   }
